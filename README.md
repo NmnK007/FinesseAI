@@ -1,6 +1,6 @@
 # FinesseAI
 
-MSME financial evidence prototype, extending the original project for IDBI Innovate 2026. Original repository and history: [NmnK007/Finnese](https://github.com/NmnK007/Finnese). Existing visual design, score simulator, language demos and original authorship are preserved.
+MSME financial evidence prototype, extending the project for VIHAAN X. Original repository and history: [NmnK007/Finesse](https://github.com/NmnK007/Finesse). Existing visual design, score simulator, language demos and original authorship are preserved.
 
 **Secure foundation:** local Mailpit OTP, opaque secure sessions, PostgreSQL migrations and owner isolation, bank CSV mapping/preview, row validation, reviewed categories, deduplication, source provenance, consent revocation, stored cash metrics, export and deletion.
 

@@ -476,7 +476,7 @@ For a deeper understanding of the implementation, refer to the following documen
 | [Hackathon Demo](docs/HACKATHON_DEMO.md) | Demonstration workflow |
 | [Implementation Plan](docs/FINESSE_2_IMPLEMENTATION_PLAN.md) | Implementation phases and remaining work |
 
-## 13. 🙌 Attribution
+## 🙌 Attribution
 
 FinesseAI builds upon the original Finesse project.
 

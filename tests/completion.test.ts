@@ -52,3 +52,9 @@ test('external adapter requires consent/configuration and rejects invented citat
  assert.equal((await externalHighlights('A fact.',['a'],'question',true,env,mock({selected:[0],citations:['other-tenant']}))).status,'INVALID_PROVIDER_RESPONSE');
  assert.notEqual((await externalHighlights('A fact.',['a'],'question',true,env,mock({selected:[0],citations:['a'],answer:'Approve loan'}))).status,'EXTRACTIVE_EXTERNAL_HIGHLIGHTS');
 });
+test('Gemini 3 uses low-latency reasoning and retries one transient server error',async()=>{
+ let calls=0;let sent:Record<string,unknown>|undefined;const env={COPILOT_EXTERNAL_ENABLED:'true',GEMINI_API_KEY:'fixture-key',GEMINI_MODEL:'gemini-3.8-flash'};
+ const transport=(async(_url:string|URL|Request,init?:RequestInit)=>{calls++;sent=JSON.parse(String(init?.body));if(calls===1)return new Response(JSON.stringify({error:{status:'UNAVAILABLE'}}),{status:503});return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify({answer:'This answer is specific to this question.',citations:['evidence-1']})}]}}]}),{status:200});}) as typeof fetch;
+ const response=await externalHighlights('Supported summary.',['evidence-1'],'What changed?',true,env,transport);
+ assert.equal(calls,2);assert.deepEqual((sent?.generationConfig as Record<string,unknown>).thinkingConfig,{thinkingLevel:'low'});assert.equal(response.status,'GEMINI_GROUNDED_ANSWER');assert.equal(response.answer,'This answer is specific to this question.');
+});

@@ -150,7 +150,7 @@ export default async function LenderDashboard() {
                     2
                   )
                 )}`}
-                download="udyamai-idbi-pipeline.json"
+                download="finesseai-idbi-pipeline.json"
                 className="inline-flex items-center gap-2 rounded-full bg-rh-lime px-4 py-2 text-[13px] font-semibold text-black transition hover:bg-rh-lime-bright"
               >
                 <Download className="h-3.5 w-3.5" /> Export pipeline
@@ -321,7 +321,7 @@ export default async function LenderDashboard() {
               Portfolio quality after disbursement.
             </h3>
             <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-muted-strong">
-              Every OCEN sanction carries a post-disbursement AA consent. UdyamAI monitors those
+              Every OCEN sanction carries a post-disbursement AA consent. FinesseAI monitors those
               accounts monthly. If a borrower's score drops <span className="font-semibold text-base-50">80 points or more</span>,
               or a new bounce lands, we fire an OCEN <span className="font-mono text-rh-lime">status</span> webhook
               to your underwriting desk before it becomes an NPA.

@@ -30,7 +30,7 @@ export function ApplicationTimeline({
             Your 12-month application history
           </div>
           <h3 className="mt-2 font-serif text-[34px] leading-tight text-black">
-            Before UdyamAI · {rejected} rejections, {approved} approvals.
+            Before FinesseAI · {rejected} rejections, {approved} approvals.
           </h3>
         </div>
         <div className="rounded-2xl border border-black/10 bg-white/80 px-4 py-3">

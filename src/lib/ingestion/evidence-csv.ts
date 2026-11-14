@@ -19,7 +19,7 @@ export function parseEvidence(csv:string,kind:EvidenceKind):EvidencePreview {
  if(Buffer.byteLength(csv)>512000)throw new AppError('VALIDATION_ERROR',413,'CSV limit is 500 KB.');
  if(/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(csv))throw new AppError('VALIDATION_ERROR',400,'Plain UTF-8 CSV required.');
  let rows:string[][];
- try{rows=parse(csv,{bom:true,trim:true,skip_empty_lines:true,max_record_size:8000});}catch{throw new AppError('VALIDATION_ERROR',400,'Malformed CSV.');}
+ try{rows=parse(csv,{bom:true,trim:true,skip_empty_lines:true,max_record_size:8000,relax_column_count:true});}catch{throw new AppError('VALIDATION_ERROR',400,'Malformed CSV.');}
  if(rows.length<2||rows.length>1001)throw new AppError('VALIDATION_ERROR',400,'Use 1–1000 data rows.');
  const headers=rows[0].map(h=>h.toLowerCase());
  const required=kind==='INVOICE'?['invoice_id','issued_on','due_on','counterparty','amount','paid_amount','direction']:kind==='UTILITY'?['bill_id','period','due_on','amount','paid_amount','paid_on','disputed']:['period','sales','due_on','filed_on'];
@@ -29,6 +29,7 @@ export function parseEvidence(csv:string,kind:EvidenceKind):EvidencePreview {
  rows.slice(1).forEach((cells,index)=>{
    const row=index+2,get=(key:string)=>cells[headers.indexOf(key)]??'';
    try{
+     if(cells.length!==headers.length)throw new Error('Row column count does not match the header.');
      if(headers.includes('currency')&&get('currency')!=='INR')throw new Error('Only INR is supported.');
      let data:EvidenceData;
      if(kind==='INVOICE'){

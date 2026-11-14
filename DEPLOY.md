@@ -1,6 +1,6 @@
 > HISTORICAL DOCUMENT — superseded by docs/ARCHITECTURE_V2.md and docs/FINNESE_2_IMPLEMENTATION_PLAN.md. AgamiAI data and approval labels are synthetic; prior validation/holdout claims are withdrawn. No AA/GST/ULI/OCEN/lender integration or legal-compliance claim is substantiated by this document. Fixed credentials and public retraining were removed; PostgreSQL is now required for owner data. Do not use these historical instructions for deployment or a current demo.
 
-# Deploying UdyamAI to Cloud Run
+# Deploying FinesseAI to Cloud Run
 
 **One container. No database. No VPC. No connector.**
 
@@ -23,10 +23,10 @@ gcloud services enable \
   artifactregistry.googleapis.com \
   secretmanager.googleapis.com
 
-gcloud artifacts repositories create udyamai \
+gcloud artifacts repositories create finesseai \
   --repository-format=docker \
   --location=asia-south1 \
-  --description="UdyamAI container images"
+  --description="FinesseAI container images"
 ```
 
 `asia-south1` (Mumbai) is a requirement, not a preference — see
@@ -42,13 +42,13 @@ the app serves a deterministic offline explanation and everything else works,
 so this step is optional for a first deploy.
 
 ```bash
-echo -n "YOUR_GEMINI_KEY" | gcloud secrets create udyamai-google-api-key \
+echo -n "YOUR_GEMINI_KEY" | gcloud secrets create finesseai-google-api-key \
   --data-file=- --replication-policy=automatic
 
 # Let the Cloud Run service account read it
 PROJECT_NUMBER=$(gcloud projects describe "$(gcloud config get-value project)" \
   --format='value(projectNumber)')
-gcloud secrets add-iam-policy-binding udyamai-google-api-key \
+gcloud secrets add-iam-policy-binding finesseai-google-api-key \
   --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
   --role=roles/secretmanager.secretAccessor
 ```
@@ -62,7 +62,7 @@ gcloud secrets add-iam-policy-binding udyamai-google-api-key \
 Cloud Build picks up the `Dockerfile` automatically.
 
 ```bash
-gcloud run deploy udyamai \
+gcloud run deploy finesseai \
   --source . \
   --region asia-south1 \
   --allow-unauthenticated \
@@ -70,7 +70,7 @@ gcloud run deploy udyamai \
   --cpu 1 --memory 512Mi \
   --min-instances 0 --max-instances 10 \
   --concurrency 80 \
-  --set-secrets=GOOGLE_API_KEY=udyamai-google-api-key:latest
+  --set-secrets=GOOGLE_API_KEY=finesseai-google-api-key:latest
 ```
 
 Drop the `--set-secrets` line if you skipped step 1.
@@ -84,7 +84,7 @@ Cloud Build ID.
 
 ```bash
 gcloud builds submit --config cloudbuild.yaml \
-  --substitutions=_REGION=asia-south1,_SERVICE=udyamai
+  --substitutions=_REGION=asia-south1,_SERVICE=finesseai
 ```
 
 Point a Cloud Build trigger at `main` with the same config and every push ships
@@ -93,8 +93,8 @@ a revision.
 ### Locally, exactly as Cloud Run runs it
 
 ```bash
-docker build -t udyamai .
-docker run --rm -p 8080:8080 -e GOOGLE_API_KEY=... udyamai
+docker build -t finesseai .
+docker run --rm -p 8080:8080 -e GOOGLE_API_KEY=... finesseai
 open http://localhost:8080
 ```
 
@@ -103,7 +103,7 @@ open http://localhost:8080
 ## 3. Verify
 
 ```bash
-URL=$(gcloud run services describe udyamai --region asia-south1 \
+URL=$(gcloud run services describe finesseai --region asia-south1 \
   --format='value(status.url)')
 
 curl -s "$URL/api/debug/dataset" | jq '{status, dataset, load_ms}'
@@ -160,7 +160,7 @@ a good trade.
 ### The one caveat
 
 Two things *are* mutable: the loan-application pipeline and the LR retrain
-history. Both write to `/tmp/udyamai` on the serving instance
+history. Both write to `/tmp/finesseai` on the serving instance
 (`src/lib/runtimeStore.ts`), which means:
 
 - an application submitted on instance A is not visible to instance B, and
@@ -179,8 +179,8 @@ only ever one writer.
 Revisions are immutable and traffic is a split, so rollback is instant:
 
 ```bash
-gcloud run revisions list --service udyamai --region asia-south1
-gcloud run services update-traffic udyamai \
+gcloud run revisions list --service finesseai --region asia-south1
+gcloud run services update-traffic finesseai \
   --region asia-south1 --to-revisions REVISION_NAME=100
 ```
 
@@ -190,7 +190,7 @@ gcloud run services update-traffic udyamai \
 
 ```bash
 gcloud run domain-mappings create \
-  --service udyamai --domain udyamai.in --region asia-south1
+  --service finesseai --domain finesseai.in --region asia-south1
 ```
 
 For anything beyond a single service — Cloud CDN, Cloud Armor, a shared

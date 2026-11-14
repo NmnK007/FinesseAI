@@ -14,25 +14,25 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "UdyamAI — MSME Financial Health, in real time.",
+  title: "FinesseAI — MSME Financial Health, in real time.",
   description:
     "Authorized financial evidence and clearly labelled synthetic demonstrations. Informative prototype; no live lender offers.",
-  metadataBase: new URL("https://udyam.credit"),
+  metadataBase: new URL(process.env.APP_ORIGIN || "http://localhost:3000"),
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/udyamai.svg", sizes: "any", type: "image/svg+xml" },
+      { url: "/finesseai.svg", sizes: "any", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/finesseai.svg", type: "image/svg+xml" }],
     shortcut: "/icon.svg",
   },
   openGraph: {
-    title: "UdyamAI — MSME Financial Health, in real time.",
+    title: "FinesseAI — MSME Financial Health, in real time.",
     description:
       "Authorized financial evidence and clearly labelled synthetic demonstrations. Informative prototype; no live lender offers.",
     type: "website",
-    images: ["/udyamai.svg"],
+    images: ["/finesseai.svg"],
   },
 };
 

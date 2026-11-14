@@ -299,7 +299,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Search
 
       <footer className="border-t border-line bg-black">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-2 px-6 py-8 text-[14px] font-medium text-white/70 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 UdyamAI. All rights reserved.</span>
+          <span>© 2026 FinesseAI. All rights reserved.</span>
           <span>Made in India · Built for IDBI Innovate 2026</span>
         </div>
       </footer>

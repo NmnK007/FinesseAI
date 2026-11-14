@@ -227,7 +227,7 @@ function RailsTab() {
     <div className="space-y-6">
       <div className="rounded-3xl border border-black/10 bg-white/70 p-6 backdrop-blur">
         <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">Regulated integration rails</div>
-        <div className="mt-2 font-serif text-[28px] leading-tight text-black">Every pipe UdyamAI plugs into</div>
+        <div className="mt-2 font-serif text-[28px] leading-tight text-black">Every pipe FinesseAI plugs into</div>
         <div className="mt-6 space-y-2">
           {rails.map(([name, provider, purpose, dir]) => (
             <div key={name} className="grid grid-cols-[24px_minmax(0,1.5fr)_minmax(0,1.5fr)_minmax(0,2fr)] items-center gap-4 rounded-2xl border border-black/10 bg-white p-4">
@@ -274,7 +274,7 @@ function DeployTab() {
     ["CI/CD", "Cloud Build → Artifact Registry", "Gradual rollout by revision · rollback is one traffic split"],
     ["Monitoring", "Cloud Logging + Cloud Monitoring (+ Sentry)", "30d log retention · p99 latency alerts · error reporting"],
     ["WAF", "Cloud Armor", "Protects public endpoints · OWASP preconfigured rules"],
-    ["DNS", "Cloud DNS", "udyamai.credit · udyamai.in"],
+    ["DNS", "Cloud DNS", "Custom domain"],
   ];
   return <TableCard title="Deploy · Google Cloud for IDBI" subtitle="Everything runs on Google Cloud in asia-south1" rows={rows} accent="#CCFF5E" />;
 }

@@ -1,6 +1,6 @@
 > HISTORICAL DOCUMENT — superseded by docs/ARCHITECTURE_V2.md and docs/FINNESE_2_IMPLEMENTATION_PLAN.md. AgamiAI data and approval labels are synthetic; prior validation/holdout claims are withdrawn. No AA/GST/ULI/OCEN/lender integration or legal-compliance claim is substantiated by this document. Fixed credentials and public retraining were removed; PostgreSQL is now required for owner data. Do not use these historical instructions for deployment or a current demo.
 
-# UdyamAI — Architecture
+# FinesseAI — Architecture
 
 **IDBI Innovate 2026 · Track 3: MSME Financial Health Card**
 Canonical architecture document · Google Cloud · 22 Sep 2026
@@ -13,7 +13,7 @@ Canonical architecture document · Google Cloud · 22 Sep 2026
 
 ## 1. Executive summary
 
-UdyamAI is a **borrower-facing living Health Card** for India's 63 million MSMEs. Every
+FinesseAI is a **borrower-facing living Health Card** for India's 63 million MSMEs. Every
 GST-registered business gets a continuously-refreshed 0–1000 score built from consented Account
 Aggregator feeds, plus the specific quantified actions that raise it — *before* they apply for
 credit. Lenders receive a pre-scored pipeline and post-sanction early-warning alerts.
@@ -67,7 +67,7 @@ discipline point the same way, twice.
                                      │ HTTPS · managed TLS
                                      ▼
         ┌────────────────────────────────────────────────────────┐
-        │  Cloud Run  ·  udyamai  ·  asia-south1                  │
+        │  Cloud Run  ·  finesseai  ·  asia-south1                  │
         │  Next.js 14 standalone · 1 vCPU / 512 MiB               │
         │  min-instances 0  →  max-instances 10                   │
         │  ~280 MB image from Artifact Registry                   │
@@ -82,7 +82,7 @@ discipline point the same way, twice.
         ├────────────────────────────────────────────────────────┤
         │  src/data/agami/*.json  → compiled into the bundle      │
         │     accounts 91 KB · transactions 3.5 MB · itr 35 KB    │
-        │  /tmp/udyamai/                ← per-instance scratch    │
+        │  /tmp/finesseai/                ← per-instance scratch    │
         │     pipeline.json · retrain.json                        │
         └───────────────────────┬────────────────────────────────┘
                                 │ HTTPS, egress via Google's default route
@@ -95,7 +95,7 @@ discipline point the same way, twice.
 
   Supporting  ·  Artifact Registry (images)  ·  Cloud Build (CI/CD from main)
               ·  Secret Manager (one secret: the Gemini key)
-              ·  Cloud Logging + Monitoring  ·  Cloud DNS (udyamai.in)
+              ·  Cloud Logging + Monitoring  ·  Cloud DNS (finesseai.in)
               ·  IAM service accounts only — no long-lived keys anywhere
 ```
 
@@ -149,9 +149,9 @@ That is the table. There is one row in it.
 |---|---|---|
 | **Artifact Registry** | 1 repository, ~1 GB after cleanup policy | Container images |
 | **Cloud Build** | Trigger on push to `main`, `cloudbuild.yaml` | Build → push → deploy. 120 free build-minutes/day covers this comfortably |
-| **Secret Manager** | 1 secret (`udyamai-google-api-key`) | The Gemini key, mounted as a Cloud Run env var. There are no database credentials, because there is no database |
+| **Secret Manager** | 1 secret (`finesseai-google-api-key`) | The Gemini key, mounted as a Cloud Run env var. There are no database credentials, because there is no database |
 | **Cloud Logging + Monitoring** | 30-day retention, 3 alerts | 5xx rate · p95 latency · monthly spend |
-| **Cloud DNS** | 1 managed zone | `udyamai.in` |
+| **Cloud DNS** | 1 managed zone | `finesseai.in` |
 | **IAM** | Runtime service account, least privilege | No long-lived keys |
 | **Cloud Billing budgets** | Alert at 50% / 90% / 100% | Spend guardrail |
 
@@ -259,8 +259,8 @@ arrive — see §4.3 and §10, Stage 2.
 
 | State | Where | Lifetime |
 |---|---|---|
-| Loan application pipeline | `/tmp/udyamai/pipeline.json` | Per instance; lost on recycle |
-| LR retrain history | `/tmp/udyamai/retrain.json` | Per instance; a cold instance retrains from the corpus on first read |
+| Loan application pipeline | `/tmp/finesseai/pipeline.json` | Per instance; lost on recycle |
+| LR retrain history | `/tmp/finesseai/retrain.json` | Per instance; a cold instance retrains from the corpus on first read |
 
 Both go through **`src/lib/runtimeStore.ts`** — one file, ~30 lines, which is the entire swap
 surface for Firestore or Cloud SQL later. Nothing above it knows where the bytes land.
@@ -469,8 +469,8 @@ is not a discount; it is three line items ceasing to exist:
 few dollars for seven days — inside the headroom above, and a single flag to set and unset:
 
 ```bash
-gcloud run services update udyamai --region asia-south1 --min-instances 1   # before
-gcloud run services update udyamai --region asia-south1 --min-instances 0   # after
+gcloud run services update finesseai --region asia-south1 --min-instances 1   # before
+gcloud run services update finesseai --region asia-south1 --min-instances 0   # after
 ```
 
 ### 9.3 Unit economics at scale
@@ -612,7 +612,7 @@ Resolved by this revision and listed so the port does not reintroduce them:
 ### Today
 
 ```
-UdyamAI/
+FinesseAI/
 ├── Dockerfile              Cloud Run image — Next.js standalone, non-root, /tmp state
 ├── amplify.yml             AWS Amplify SSR — the interim deploy target
 ├── cloudbuild.yaml         Cloud Build → Artifact Registry → Cloud Run
@@ -633,7 +633,7 @@ UdyamAI/
 ### After the Phase 2 split
 
 ```
-UdyamAI/
+FinesseAI/
 ├── web/          React PWA — Vite + TS + Tailwind + framer-motion
 │                 components/** port from src/components/** almost verbatim
 │                 gstin.ts stays client-side (on-device checksum is a product feature)

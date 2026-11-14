@@ -31,7 +31,9 @@ export function simulate(raw:ScenarioInput){
  });
  const minimum=Math.min(...rows.map(r=>r.stressedPaise));
  return {version:'cash-scenario-v1',mode:'SCENARIO_ONLY',input:p,emiPaise:emi,illustrativeTotalRepaymentPaise:sumPaise([emi*p.tenureMonths,p.feesPaise]),nominalAnnualRatePct:p.annualRateBps/100,apr:null,
- rows,minimumCashPaise:minimum,liquidityGapPaise:Math.max(0,-minimum),outstandingSupplierPaise:costs*Math.min(p.months,p.supplierDelayMonths??0),negativeMonths:rows.filter(r=>r.stressedPaise<0).map(r=>r.month),
+ rows,minimumCashPaise:minimum,liquidityGapPaise:Math.max(0,-minimum),
+ outstandingReceivablesPaise:receipts*Math.min(p.months,p.delayMonths),
+ outstandingSupplierPaise:costs*Math.min(p.months,p.supplierDelayMonths??0),negativeMonths:rows.filter(r=>r.stressedPaise<0).map(r=>r.month),
  illustrativeDscr:p.obligationsComplete&&p.existingDebtPaise+emi>0?(receipts-costs-(p.monthlyTaxPaise??0))/(p.existingDebtPaise+emi):null,
  assumptions:['User-entered opening cash and existing debt obligations.','Constant monthly receipts and costs; delayed collections arrive after the stated whole-month lag.','No pre-start receivable collections or supplier obligations assumed. User-entered tax is paid monthly in both paths; extra inventory investment applies to stress month one. Supplier lag defers stressed costs; unpaid costs at horizon remain liabilities.','Both paths include the proposed loan, fees and debt service. EMI rounding may alter the final installment by a few paise.','Nominal rate is not APR. No default prediction or guaranteed repayment capacity.']};
 }

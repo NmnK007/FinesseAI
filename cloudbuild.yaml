@@ -1,20 +1,20 @@
-# UdyamAI · Cloud Build → Artifact Registry → Cloud Run
+# FinesseAI · Cloud Build → Artifact Registry → Cloud Run
 #
 # Connect this to the repo (Cloud Build → Triggers → push to main) and every
 # push ships a new revision. Or run it by hand:
 #
 #   gcloud builds submit --config cloudbuild.yaml \
-#     --substitutions=_REGION=asia-south1,_SERVICE=udyamai
+#     --substitutions=_REGION=asia-south1,_SERVICE=finesseai
 #
 # See DEPLOY.md for first-time setup (APIs, Artifact Registry repo, secrets).
 
 substitutions:
   _REGION: asia-south1
-  _REPOSITORY: udyamai
-  _SERVICE: udyamai
+  _REPOSITORY: finesseai
+  _SERVICE: finesseai
   # Comma-separated Secret Manager bindings; set to "" to deploy without a
   # Gemini key (the app falls back to its offline explanation).
-  _SECRETS: GOOGLE_API_KEY=udyamai-google-api-key:latest
+  _SECRETS: GOOGLE_API_KEY=finesseai-google-api-key:latest
 
 steps:
   # Pick the immutable tag. Trigger builds get SHORT_SHA; a manual

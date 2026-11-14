@@ -1,6 +1,6 @@
-#  FinesseAI
+# FinesseAI
 
-MSME financial evidence prototype, extending the original UdyamAI project for IDBI Innovate 2026. O. Existing visual design, score simulator, language demos and original authorship are preserved.
+MSME financial evidence prototype, extending the original project for IDBI Innovate 2026. Original repository and history: [NmnK007/Finnese](https://github.com/NmnK007/Finnese). Existing visual design, score simulator, language demos and original authorship are preserved.
 
 **Secure foundation:** local Mailpit OTP, opaque secure sessions, PostgreSQL migrations and owner isolation, bank CSV mapping/preview, row validation, reviewed categories, deduplication, source provenance, consent revocation, stored cash metrics, export and deletion.
 
@@ -54,7 +54,7 @@ Offline illustrative model generation: `npm.cmd run ml:train:demo`. It fits synt
 | `/intelligence` | Evidence, Health Card, alerts, copilot, scenarios and lending sandbox |
 | `/lender` | Explicitly shared records for enrolled reviewers |
 | `/dashboard?mode=demo` | Explicit synthetic legacy dashboard, development only |
-| `/lender?mode=demo` | Isolated synthetic lender illustration, development only |
+| `/lender?mode=demo` | Fictional lender desk with weighted MSME scores and simulated funding, development only |
 | `/api/health` | Non-sensitive database readiness |
 
 Legacy hardcoded credentials no longer work. To demonstrate reviewer access, sign in once as `reviewer@finnese.test`, run `npm.cmd run demo:enroll-reviewer -- reviewer@finnese.test`, then grant that account access from the owner’s evidence workspace. Reviewer role alone grants no records. A GSTIN query never grants access. Sandbox drafts never reach a real lender.

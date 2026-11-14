@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill the IDBI Innovate template with UdyamAI content on slides 3-13.
+"""Fill the IDBI Innovate template with FinesseAI content on slides 3-13.
 
 Opens the official IDBI template, preserves every existing shape (header, footer,
 title text box), and layers modern content into the empty area below the title.
@@ -22,7 +22,7 @@ def E(v):
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / "Prototype Submission Deck _ IDBI Innovate.pptx"
-OUT = ROOT / "UdyamAI - IDBI Innovate Submission.pptx"
+OUT = ROOT / "FinesseAI - IDBI Innovate Submission.pptx"
 SHOTS = ROOT / "deck-screenshots"
 
 # ─── palette ───────────────────────────────────────────────────────────
@@ -148,24 +148,24 @@ def hline(slide, left, top, width, color=LINE, weight=0.75):
 # ─── logo (reconstructed in pptx shapes) ───────────────────────────────
 
 def draw_logo(slide, left, top, size=Inches(0.7)):
-    """UdyamAI mark: lime rounded square with a serif U inscribed."""
+    """FinesseAI mark: lime rounded square with a serif F inscribed."""
     rect(slide, left, top, size, size, LIME, radius=True, radius_amt=0.24)
     # Inner shadow ring (subtle, gives depth)
     inset = size / 12
     rect(slide, left + inset, top + inset, size - inset * 2, size - inset * 2,
          LIME, radius=True, radius_amt=0.22)
     # Big serif U
-    txt(slide, left, top, size, size, "U",
+    txt(slide, left, top, size, size, "F",
         size=int(size / 914400 * 42), bold=True, color=INK,
         align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, font=SERIF)
 
 
 def draw_wordmark(slide, left, top, size=Inches(0.6)):
-    """Full lockup: logo mark + Udyam + AI (italic serif)."""
+    """Full lockup: logo mark + Finesse + AI (italic serif)."""
     draw_logo(slide, left, top, size)
     gap = size + size / 6
     w = Inches(2.8)
-    # "Udyam" in sans + "AI" in italic serif
+    # "Finesse" in sans + "AI" in italic serif
     box = slide.shapes.add_textbox(E(left + gap), E(top), E(w), E(size))
     tf = box.text_frame
     tf.margin_left = Emu(0)
@@ -175,7 +175,7 @@ def draw_wordmark(slide, left, top, size=Inches(0.6)):
     p = tf.paragraphs[0]
     p.text = ""
     r1 = p.add_run()
-    r1.text = "Udyam"
+    r1.text = "Finesse"
     r1.font.name = SANS
     r1.font.size = Pt(int(size / 914400 * 28))
     r1.font.bold = True
@@ -316,7 +316,7 @@ def slide_brief_idea(slide):
     # Sub-pitch — clean sans, muted
     sub_top = hero_top + Inches(0.78)
     sub_text = (
-        "UdyamAI is the unified assessment framework on AA + GST + UPI + EPFO — "
+        "FinesseAI is the unified assessment framework on AA + GST + UPI + EPFO — "
         "a living Health Card for the MSME, a pre-qualified lead engine for the bank, "
         "and an audit-first ML layer RBI can approve. We don't score you at apply time. "
         "We score you continuously — so rejection becomes fixable, and portfolio quality "
@@ -356,7 +356,7 @@ def slide_brief_idea(slide):
     rect(slide, rx, cmp_top, Inches(0.08), cmp_h, LIME)
     txt(slide, rx + Inches(0.2), cmp_top + Inches(0.06),
         Inches(1.4), Inches(0.2),
-        "UDYAMAI", size=7, bold=True, color=LIME)
+        "FINESSEAI", size=7, bold=True, color=LIME)
     txt(slide, rx + Inches(0.2), cmp_top + Inches(0.26),
         lw - Inches(0.28), Inches(0.28),
         "Continuous · fixable · pre-qualified across 64 lenders · EN · HI · TE",
@@ -378,7 +378,7 @@ def slide_opportunities(slide):
     tbl_w = Inches(5.4)
     tbl_h = Inches(2.55)
 
-    headers = ["Dimension", "Existing players", "UdyamAI"]
+    headers = ["Dimension", "Existing players", "FinesseAI"]
     rows = [
         ["Audience", "Sell scoring to banks", "Sell to the borrower"],
         ["Score cadence", "One-shot at apply time", "Continuous · monthly"],
@@ -557,7 +557,7 @@ def slide_flowchart(slide):
         arrow(slide, x + sw / 2, src_y + Inches(0.36), cx, src_y + Inches(0.56))
 
     y = src_y + Inches(0.58)
-    y = hbox("UdyamAI Score Engine · 4 sub-scores → 1000", y, GREEN, WHITE,
+    y = hbox("FinesseAI Score Engine · 4 sub-scores → 1000", y, GREEN, WHITE,
              w=Inches(3.3), h=Inches(0.42))
     y = arr(y, Inches(0.11))
 
@@ -727,7 +727,7 @@ def slide_architecture(slide):
         ("S3", "Consent artifacts · KYC docs"),
         ("ElastiCache", "Redis · session + cache"),
         ("Secrets Manager", "API keys · mTLS certs"),
-        ("Route 53", "DNS · udyamai.credit"),
+        ("Route 53", "DNS · finesseai.credit"),
         ("CloudWatch", "Logs · metrics · alarms"),
         ("IAM · KMS", "Access · encryption CMEK"),
         ("CodePipeline", "CI/CD · blue-green"),
@@ -882,7 +882,7 @@ def slide_roadmap(slide):
             "Khatabook / OkCredit embed (30M+ MSMEs)",
             "WhatsApp vernacular coaching bot",
             "Sector cohort benchmarking",
-            "UdyamAI Current Account",
+            "FinesseAI Current Account",
         ]),
         ("18-36 MONTHS", NAVY, [
             "RBI RegTech sandbox partner",
@@ -915,11 +915,11 @@ def slide_roadmap(slide):
 def slide_links(slide):
     links = [
         ("GitHub Public Repository",
-         "https://github.com/<your-handle>/udyamai", SAFFRON),
+         "https://github.com/NmnK007/FinesseAI", SAFFRON),
         ("Demo Video (3 minutes)",
          "https://youtu.be/<video-id>", GREEN),
         ("Final Product Link",
-         "https://udyamai.vercel.app", BLUE),
+         "Deployment URL pending", BLUE),
     ]
     y = CONTENT_TOP + Inches(0.15)
     lh = Inches(1.05)

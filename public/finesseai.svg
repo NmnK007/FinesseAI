@@ -8,9 +8,6 @@
   <!-- Lime gap highlight -->
   <circle cx="256" cy="256" r="128" stroke="#CCFF5E" stroke-width="46" stroke-linecap="round" stroke-dasharray="90 700" transform="rotate(305 256 256)"></circle>
 
-  <!-- U -->
-  <path d="M212 194V282
-       C212 318 231 340 256 340
-       C281 340 300 318 300 282
-       V194" stroke="#111111" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- F -->
+  <path d="M218 325V189H296 M218 251H280" stroke="#111111" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>

@@ -27,8 +27,8 @@ const IS_MANAGED_RUNTIME = Boolean(
 );
 
 export const RUNTIME_DATA_DIR =
-  process.env.UDYAMAI_DATA_DIR ??
-  (IS_MANAGED_RUNTIME ? "/tmp/udyamai" : path.join(process.cwd(), ".data"));
+  process.env.FINESSEAI_DATA_DIR ?? process.env.UDYAMAI_DATA_DIR ??
+  (IS_MANAGED_RUNTIME ? "/tmp/finesseai" : path.join(process.cwd(), ".data"));
 
 export function runtimeFile(name: string): string {
   return path.join(RUNTIME_DATA_DIR, name);

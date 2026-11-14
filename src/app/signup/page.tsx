@@ -17,7 +17,7 @@ export default function SignupRolePage() {
             <Sparkles className="h-3 w-3" /> Sign up · free preview
           </div>
           <h1 className="mt-4 font-serif text-[46px] leading-[0.98] tracking-tight text-black sm:text-[60px]">
-            Get started with UdyamAI.
+            Get started with FinesseAI.
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-[15px] text-black/60">
             Two roles, two accounts. Pick the one that describes you.

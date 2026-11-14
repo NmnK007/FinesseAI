@@ -63,7 +63,7 @@ export function WhatsAppOnboarding() {
     initRef.current = true;
     (async () => {
       await new Promise((r) => setTimeout(r, 300));
-      await say("Namaste 🙏 Main UdyamAI hoon — your MSME credit assistant.", 900);
+      await say("Namaste 🙏 Main FinesseAI hoon — your MSME credit assistant.", 900);
       await say("I can get you a live Health Score and pre-qualified loan quotes in 3 minutes. Ready?", 1200);
       push({
         kind: "quickReplies",
@@ -125,7 +125,7 @@ export function WhatsAppOnboarding() {
       return;
     }
     if (cmd === "SCORE" || cmd === "2") {
-      await say(`Your latest UdyamAI Health Score is ${DEMO_MSME.score} / 1000 · ${DEMO_MSME.band} band.`, 900);
+      await say(`Your latest FinesseAI Health Score is ${DEMO_MSME.score} / 1000 · ${DEMO_MSME.band} band.`, 900);
       push({ kind: "scoreCard", score: DEMO_MSME.score, band: DEMO_MSME.band });
       await say("Type MENU any time to see options.", 800);
       return;
@@ -146,7 +146,7 @@ export function WhatsAppOnboarding() {
       return;
     }
     if (cmd === "OPEN" || cmd === "4") {
-      await say(`Opening your Health Card at udyamai.com/dashboard...`, 800);
+      await say(`Opening your Health Card at the FinesseAI dashboard...`, 800);
       await new Promise((r) => setTimeout(r, 700));
       window.location.assign(`/dashboard?gstin=${DEMO_MSME.gstin}`);
       return;
@@ -265,7 +265,7 @@ export function WhatsAppOnboarding() {
 
   async function revealScore() {
     setStep(4);
-    await say(`🎉 Your UdyamAI Health Score is ready.`, 700);
+    await say(`🎉 Your FinesseAI Health Score is ready.`, 700);
     push({ kind: "scoreCard", score: DEMO_MSME.score, band: DEMO_MSME.band });
     await new Promise((r) => setTimeout(r, 1400));
     await say("Now the good part — I've found 3 pre-qualified lenders for you. Pick one to apply.", 1200);
@@ -299,7 +299,7 @@ export function WhatsAppOnboarding() {
             title: "Score saved · no application submitted",
             body: (
               <div className="text-black">
-                <div className="text-[13px] font-semibold text-black">Your UdyamAI Health Card is live.</div>
+                <div className="text-[13px] font-semibold text-black">Your FinesseAI Health Card is live.</div>
                 <div className="mt-1 text-[11px] text-black/70">
                   Come back any time — type LOAN in this chat to see updated quotes, or open the full Health Card in your browser.
                 </div>
@@ -553,11 +553,11 @@ export function WhatsAppOnboarding() {
           {/* WhatsApp header */}
           <div className="flex items-center gap-3 bg-[#075E54] px-4 py-3">
             <div className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#075E54]">
-              <span className="font-serif text-lg font-bold">U</span>
+              <span className="font-serif text-lg font-bold">F</span>
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1 text-[14px] font-semibold text-white">
-                UdyamAI · MSME Credit
+                FinesseAI · MSME Credit
                 <Check className="h-3.5 w-3.5 text-[#34B7F1]" />
               </div>
               <div className="text-[11px] text-white/80">{typing ? "typing..." : "online"}</div>
@@ -734,7 +734,7 @@ function BubbleView({ bubble }: { bubble: Bubble }) {
       >
         <div className="w-[90%] overflow-hidden rounded-2xl rounded-tl-sm bg-black text-white shadow-md">
           <div className="bg-gradient-to-r from-[#25D366] to-[#075E54] px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-white">
-            UdyamAI Health Card
+            FinesseAI Health Card
           </div>
           <div className="p-4">
             <div className="text-[10px] uppercase tracking-widest text-white/60">MSME · LIVE</div>

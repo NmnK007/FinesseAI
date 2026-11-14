@@ -47,7 +47,7 @@ export function CompareTable() {
             <div className="grid grid-cols-2 gap-3 text-[13px] font-semibold uppercase tracking-[0.18em]">
               <div className="text-black/55">Existing lenders</div>
               <div className="text-black">
-                Udyam<span className="font-serif italic">AI</span>
+                Finesse<span className="font-serif italic">AI</span>
               </div>
             </div>
             {ROWS.map((r, i) => (

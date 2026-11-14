@@ -69,7 +69,7 @@ export function IncomingApplications({ lender, decidedBy }: { lender: string; de
         </button>
       </div>
       <div className="mt-1 text-[13px] text-black/60">
-        Live queue · MSMEs who just submitted via UdyamAI · pipeline auto-refreshes every 6s
+        Live queue · MSMEs who just submitted via FinesseAI · pipeline auto-refreshes every 6s
       </div>
 
       <div className="mt-5 space-y-3">

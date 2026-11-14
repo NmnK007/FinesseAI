@@ -1,6 +1,6 @@
 > HISTORICAL DOCUMENT — superseded by docs/ARCHITECTURE_V2.md and docs/FINNESE_2_IMPLEMENTATION_PLAN.md. AgamiAI data and approval labels are synthetic; prior validation/holdout claims are withdrawn. No AA/GST/ULI/OCEN/lender integration or legal-compliance claim is substantiated by this document. Fixed credentials and public retraining were removed; PostgreSQL is now required for owner data. Do not use these historical instructions for deployment or a current demo.
 
-# UdyamAI — Google Cloud Resource Request (Hackathon Prototype)
+# FinesseAI — Google Cloud Resource Request (Hackathon Prototype)
 
 Prepared 22 Sep 2026 · IDBI Innovate 2026, Track 3 (MSME Financial Health Card)
 Supersedes `AWS_RESOURCE_REQUEST.md` (19 Aug 2026), which is withdrawn.
@@ -24,7 +24,7 @@ a judged demo. Depth lives in `ARCHITECTURE.md`; this document is the form.
 
 ### Use case
 
-UdyamAI is a borrower-facing "living Health Card" for Indian MSMEs. A GST-registered business gets
+FinesseAI is a borrower-facing "living Health Card" for Indian MSMEs. A GST-registered business gets
 a continuously-refreshed 0–1000 financial health score built from consented Account Aggregator
 feeds (bank statements, GST returns, EPFO), plus the specific quantified actions that will raise
 it — *before* they ever file a loan application. Lenders see a pre-scored pipeline and
@@ -46,7 +46,7 @@ the judging window.**
 ☑ **Cloud Build** — CI/CD from `main`
 ☑ **Secret Manager** — one secret (the Gemini API key)
 ☑ **Cloud Logging + Cloud Monitoring** — logs, 3 alerts
-☑ **Cloud DNS** — `udyamai.in`
+☑ **Cloud DNS** — `finesseai.in`
 ☑ **IAM** — one runtime service account
 ☑ **Vertex AI** *(optional, Phase 2)* — in-region Gemini with per-call audit logs; the prototype
 uses the Gemini API directly
@@ -113,7 +113,7 @@ rounds to zero and the largest remaining line is the Gemini API.
 business is uncreditworthy, but because it cannot *prove* creditworthiness at the moment of
 application. Every incumbent (Perfios, Jocata, Karza) sells scoring to the *bank*, at the instant
 of application. Nobody has built the borrower-facing equivalent of Credit Karma for Indian MSMEs.
-UdyamAI closes that gap: the MSME sees the score continuously, knows what to fix, and arrives at
+FinesseAI closes that gap: the MSME sees the score continuously, knows what to fix, and arrives at
 the lender already qualified. For IDBI this converts a rejection-heavy funnel into a pre-scored
 pipeline, and adds post-disbursement early-warning on the existing book — an NPA reduction lever,
 not only an origination lever.
@@ -173,7 +173,7 @@ The full treatment is in **`ARCHITECTURE.md`**. The short version:
                    │ HTTPS · managed TLS
                    ▼
    ┌────────────────────────────────────────┐
-   │  Cloud Run · udyamai · asia-south1      │
+   │  Cloud Run · finesseai · asia-south1      │
    │  Next.js 14 · 1 vCPU / 512 MiB          │
    │  min 0 → max 10 · ~280 MB image         │
    │  3.7 MB AgamiAI corpus inside the image │
@@ -306,8 +306,8 @@ The 92% reduction is not a pricing discount. Three line items stopped existing:
 inside the headroom above, and one flag to set and unset:
 
 ```bash
-gcloud run services update udyamai --region asia-south1 --min-instances 1   # before
-gcloud run services update udyamai --region asia-south1 --min-instances 0   # after
+gcloud run services update finesseai --region asia-south1 --min-instances 1   # before
+gcloud run services update finesseai --region asia-south1 --min-instances 0   # after
 ```
 
 No database to upsize, because there is no database.

@@ -146,7 +146,7 @@ export function HeroArt() {
           strokeWidth="2.5"
         />
 
-        {/* brand score arc — sits in the ring band, matches UdyamAI mark */}
+        {/* brand score arc — sits in the ring band, matches FinesseAI mark */}
         <motion.circle
           initial={{ strokeDashoffset: arcCirc }}
           animate={{ strokeDashoffset: arcCirc * (1 - 0.847) }}

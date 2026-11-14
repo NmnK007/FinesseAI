@@ -1,5 +1,38 @@
 import type { Assessment } from './assessment';
 
+export function explainLoanReadiness(card:Assessment,locale:'en'|'hi'){
+ const hindi=locale==='hi';
+ const labels:Record<string,string>={
+  revenue:'राजस्व स्थिरता',compliance:'दाखिले और भुगतान का समयपालन',
+  counterparty:'ग्राहक विविधता',growth:'देखी गई बिक्री वृद्धि'
+ };
+ const label=(domain:Assessment['dimensions'][number])=>hindi?labels[domain.key]??domain.label:domain.label;
+ const scored=card.dimensions.filter(domain=>domain.score!==null).sort((a,b)=>b.score!-a.score!);
+ const strongest=scored[0];
+ const weakest=scored.at(-1);
+ const scores=card.dimensions.map(domain=>{
+  const score=domain.score===null?(hindi?'उपलब्ध नहीं':'Unavailable'):`${domain.score}/1000`;
+  return `• ${label(domain)} (${Math.round(domain.weight*100)}%) — ${score}`;
+ });
+ const overall=card.overall===null?(hindi?'उपलब्ध नहीं':'unavailable'):`${card.overall}/1000`;
+ const opening=hindi?`मेरी राय में, शायद। ऋणदाता अपने मानदंड, नकदी प्रवाह और मौजूदा कर्ज की समीक्षा करेगा। आपका वित्तीय स्थिति सूचकांक ${overall} है।`:
+  `My take: maybe. A lender will assess your cash flow, existing debt and its own eligibility criteria. Your Financial Health Index is ${overall}.`;
+ const strength=strongest?(hindi?`आवेदन में ${label(strongest)} (${strongest.score}/1000) को पहले दिखाएँ। उपलब्ध स्कोर में यह आपका सबसे मजबूत पक्ष है।`:
+  `Lead with ${label(strongest)} (${strongest.score}/1000) in the lender conversation. It is your strongest scored domain.`):
+  (hindi?'पहले लागू बैंक, चालान और अनुपालन रिकॉर्ड जोड़ें।':'Start by adding the applicable bank, invoice and compliance records.');
+ const next=card.overall===null&&strongest
+  ?(hindi?'आवेदन से पहले उन आयामों के रिकॉर्ड पूरे करें जिनका स्कोर उपलब्ध नहीं है।':'Before applying, fill the evidence gaps for the domains marked unavailable.')
+  :weakest&&weakest.score!==strongest?.score
+    ?(hindi?`पहले ${label(weakest)} (${weakest.score}/1000) के रिकॉर्ड की समीक्षा करें।`:
+     `Review the evidence for ${label(weakest)} (${weakest.score}/1000) first. It is your lowest scored domain.`):'';
+ return [opening,scores.join('\n'),strength,next].filter(Boolean).join('\n\n');
+}
+
+export function isLoanReadinessQuestion(question:string){
+ return /\b(loans?|financing|funding|borrow(?:ing)?|credit)\b|ऋण|लोन|कर्ज़?|karz/i.test(question) &&
+  /\b(get|qualif\w*|eligib\w*|approv\w*|chances?|likely|can|could|will|ready|readiness|mil\w*|mujhe|mai|kya)\b|मिल|पात्र|योग्य|संभावना|मंज़?ूर/i.test(question);
+}
+
 export function explainHealthIndex(card:Assessment,locale:'en'|'hi'='en',question='',change?:number|null){
  const scored=card.dimensions.filter((d):d is typeof d&{score:number}=>d.score!==null);
  if(card.overall===null)return locale==='hi'

@@ -1,0 +1,6 @@
+invoice_id,issued_on,due_on,counterparty,amount,paid_amount,direction
+LOAN-ONLY,2026-08-01,2026-08-20,Cedar Traders,10000,0,SALE
+MATCH-100,2026-09-01,2026-09-20,Lake Retail,10000,10000,SALE
+INV-SHARED,2026-10-01,2026-10-20,Maple Stores,5000,0,SALE
+inv-shared,2026-10-01,2026-10-20,Maple Stores,5000,0,SALE
+BAD-WIDTH,2026-10-01,2026-10-20,Maple Stores,100,0,SALE,EXTRA

@@ -14,13 +14,13 @@ export default function LoginRolePage() {
             <Logo size={56} variant="chip" />
           </div>
           <div className="text-[13px] font-semibold uppercase tracking-[0.18em] text-black/60">
-            Log in to UdyamAI
+            Log in to FinesseAI
           </div>
           <h1 className="mt-3 font-serif text-[46px] leading-[0.98] tracking-tight text-black sm:text-[60px]">
             Who are you today?
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-[15px] text-black/60">
-            UdyamAI works two ways — for the MSME who needs credit, and for the bank who lends it.
+            FinesseAI works two ways — for the MSME who needs credit, and for the bank who lends it.
             Pick your side to sign in.
           </p>
           <div className="mt-4 text-[13px] text-black/60">

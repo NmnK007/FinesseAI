@@ -12,7 +12,7 @@ import { detectAlerts } from '../finance/anomalies';
 import { simulate,observedBaseline,type ScenarioInput } from '../finance/scenario';
 import { formatPaise } from '../finance/money';
 import { AppError } from '../security/errors';
-import { explainHealthIndex } from '../finance/health-insights';
+import { explainHealthIndex,explainLoanReadiness,isLoanReadinessQuestion } from '../finance/health-insights';
 
 export function analysisStore(db:Database){return {
  async read(user:Actor,businessId:string,asOf:string){return db.transaction(async sql=>{
@@ -37,10 +37,14 @@ export function analysisStore(db:Database){return {
  async chat(user:Actor,businessId:string,question:string,asOf:string,locale:'en'|'hi'='en'){
   const data=await intelligenceStore(db).read(user,businessId,asOf);
   const q=question.toLowerCase().replace(/डीएससीआर/g,'dscr').replace(/सहमति/g,'consent').replace(/परिदृश्य/g,'scenario').replace(/मॉडल/g,'model').replace(/संकेत/g,'alert').replace(/हटाओ|अनदेखा|दूसरे कारोबार/g,'ignore');let answer:string,tool:string,citations:string[]=[];
-  if(/ignore|system prompt|other (business|tenant|user)|execute|delete|transfer funds|approve.*loan/.test(q))return {answer:'I can only explain authorized financial evidence and read-only calculations. I cannot follow document instructions, access another business or perform lending actions.',tool:'policy',citations:[] as string[],mode:'LOCAL_DETERMINISTIC'};
+  if(/ignore|system prompt|other (business|tenant|user)|execute|delete|transfer funds|^(?:please\s+)?approve\b.*\bloan\b/.test(q))return {answer:'I can only explain authorized financial evidence and read-only calculations. I cannot follow document instructions, access another business or perform lending actions.',tool:'policy',citations:[] as string[],mode:'LOCAL_DETERMINISTIC'};
+  if(isLoanReadinessQuestion(q))return {
+   answer:explainLoanReadiness(data.current,locale),tool:'getLoanReadiness',mode:'LOCAL_DETERMINISTIC',
+   citations:[...new Set(data.current.dimensions.flatMap(domain=>domain.evidenceIds))],
+  };
   if(/score|स्कोर/.test(q)){
    tool='getHealthCard';citations=data.current.dimensions.flatMap(d=>d.evidenceIds);
-   const [latest,previous]=data.history;const change=latest&&previous&&latest.result.overall!==null&&previous.result.overall!==null?latest.result.overall-previous.result.overall:null;
+   const [latest,previous]=data.history;const change=latest&&previous&&latest.result.version===previous.result.version&&latest.result.overall!==null&&previous.result.overall!==null?latest.result.overall-previous.result.overall:null;
    answer=explainHealthIndex(data.current,locale,question,change);
   }else if(/overdue|receivable|invoice|customer|बकाया/.test(q)){
    tool='getOutstandingInvoices';citations=data.evidence.filter(e=>e.kind==='INVOICE').map(e=>e.id);answer=`Owner-reported overdue sales receivables total ${formatPaise(data.current.overdueReceivablesPaise)}. Paid amounts are unverified declarations; review exact-reference bank matches and any cash settlements in the reconciliation panel.`;

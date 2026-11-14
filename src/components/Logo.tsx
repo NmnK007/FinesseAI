@@ -1,6 +1,6 @@
 /**
- * UdyamAI mark — official brand SVG (score ring + U).
- * Kept in sync with /src/app/icon.svg and /public/udyamai.svg
+ * FinesseAI mark — official brand SVG (score ring + F).
+ * Kept in sync with /src/app/icon.svg and /public/finesseai.svg
  * so the favicon, apple-icon, and in-app mark are identical.
  */
 export function Logo({
@@ -25,7 +25,7 @@ export function Logo({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      aria-label="UdyamAI"
+      aria-label="FinesseAI"
     >
       {showBg && <rect x="24" y="24" width="464" height="464" rx="96" fill="#CCFF5E" />}
       <circle
@@ -49,7 +49,7 @@ export function Logo({
         transform="rotate(305 256 256)"
       />
       <path
-        d="M212 194V282 C212 318 231 340 256 340 C281 340 300 318 300 282 V194"
+        d="M218 325V189H296 M218 251H280"
         stroke={ink}
         strokeWidth="30"
         strokeLinecap="round"
@@ -79,7 +79,7 @@ export function Wordmark({
           isDark ? "text-white" : "text-black"
         }`}
       >
-        Udyam
+        Finesse
         <span
           className={`ml-0.5 font-serif italic ${
             isDark ? "text-rh-lime" : "text-black/60"

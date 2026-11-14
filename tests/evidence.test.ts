@@ -9,11 +9,47 @@ import { intelligenceStore } from '../src/lib/db/intelligence';
 import { parseEvidence,type Invoice } from '../src/lib/ingestion/evidence-csv';
 import { assess,type Evidence,type CashRow } from '../src/lib/finance/assessment';
 import { provider } from '../src/lib/providers';
+import { detectAlerts } from '../src/lib/finance/anomalies';
+import { reconcile } from '../src/lib/finance/reconciliation';
 const fixture=(kind:string)=>readFile(`public/samples/${kind}.csv`,'utf8');
 let pg:PGlite,db:Database;
 const a={id:randomUUID(),email:'evidence-a@finnese.test',role:'customer' as const},b={id:randomUUID(),email:'evidence-b@finnese.test',role:'customer' as const};
 before(async()=>{pg=new PGlite();for(const file of(await readdir('db/migrations')).sort())await pg.exec(await readFile(`db/migrations/${file}`,'utf8'));db={query:(sql,params)=>pg.query(sql,params),transaction:fn=>pg.transaction(tx=>fn(tx as Sql))};for(const u of[a,b])await db.query('INSERT INTO users(id,email) VALUES ($1,$2)',[u.id,u.email]);});
 after(async()=>pg.close());
+test('alternate upload reports a malformed-width row without losing the valid rows',()=>{
+ const csv='invoice_id,issued_on,due_on,counterparty,amount,paid_amount,direction\nA,2026-08-01,2026-08-10,Shop,100,20,SALE\nB,2026-08-01,2026-08-10,Shop,100,20,SALE,extra';
+ const preview=parseEvidence(csv,'INVOICE');
+ assert.equal(preview.rows.length,1);
+ assert.deepEqual(preview.rejected,[{row:3,reason:'Row column count does not match the header.'}]);
+});
+test('shared payments, similar invoices and missing bank periods have distinct review outcomes',()=>{
+ const invoice:Invoice={key:'SALE:A',issuedOn:'2026-08-01',dueOn:'2026-08-20',counterparty:'Example Shop',amountPaise:10000,paidPaise:0,direction:'SALE'};
+ const evidence:Evidence[]=[
+  {id:'i1',kind:'INVOICE',data:invoice,origin:'USER_UPLOADED_UNVERIFIED'},
+  {id:'i2',kind:'INVOICE',data:{...invoice,key:'SALE:a'},origin:'USER_UPLOADED_UNVERIFIED'},
+  {id:'g1',kind:'GST',data:{key:'2026-09',period:'2026-09',salesPaise:10000,dueOn:'2026-10-20',filedOn:null},origin:'USER_UPLOADED_UNVERIFIED'},
+ ];
+ const loan:CashRow={id:'loan',occurred_on:'2026-08-12',amount_paise:'10000',reference:'A',category:'LOAN_DISBURSEMENT',description:'loan',account_id:'a'};
+ const receipt={...loan,id:'receipt',category:'BUSINESS_SALE'};
+ assert.deepEqual(reconcile([loan],evidence,'2026-11-13',{}).matches.map(m=>m.status),['UNMATCHED','UNMATCHED']);
+ assert.deepEqual(reconcile([receipt],evidence,'2026-11-13',{}).matches.map(m=>m.status),['PARTIAL_OR_AMBIGUOUS','PARTIAL_OR_AMBIGUOUS']);
+ const card=assess([receipt],evidence,'2026-11-13');
+ assert.ok(card.matches.every(match=>match.shared&&match.status==='PARTIAL_OR_MISMATCH'));
+ assert.equal(card.gstGaps[0].bankObserved,false);
+ assert.deepEqual(detectAlerts([receipt],evidence,'2026-11-13').map(a=>a.rule).sort(),['SHARED_INVOICE_PAYMENT_V1','SIMILAR_SALES_INVOICES_V1']);
+});
+test('scoring uses the latest consecutive invoice run without losing earlier invoice totals',()=>{
+ const invoices:Evidence[]=['04','07','08','09'].map(month=>({
+  id:month,kind:'INVOICE',origin:'USER_UPLOADED_UNVERIFIED',
+  data:{key:'SALE:'+month,issuedOn:`2026-${month}-01`,dueOn:`2026-${month}-20`,counterparty:'Shop',amountPaise:10000,paidPaise:0,direction:'SALE'},
+ }));
+ const card=assess([],invoices,'2026-11-13');
+ assert.equal(card.version,'evidence-health-v4');
+ assert.equal(card.invoiceSalesPaise,40000);
+ assert.deepEqual(card.dimensions[0].evidenceIds,['07','08','09']);
+ assert.equal(card.dimensions[0].score,1000);
+ assert.equal(assess([],invoices.filter(e=>e.id!=='08'),'2026-11-13').dimensions[0].score,null);
+});
 test('invoice dates, directions, amounts and conflicting duplicates are validated',()=>{
  const p=parseEvidence('invoice_id,issued_on,due_on,counterparty,amount,paid_amount,direction\nA,2026-08-01,2026-08-10,Shop,100,20,SALE\nA,2026-08-01,2026-08-10,Shop,100,20,SALE\nA,2026-08-01,2026-08-10,Shop,200,20,SALE\nB,2026-08-11,2026-08-10,Shop,100,20,SALE','INVOICE');
  assert.equal(p.rows.length,1);assert.equal(p.skipped.length,1);assert.equal(p.rejected.length,2);

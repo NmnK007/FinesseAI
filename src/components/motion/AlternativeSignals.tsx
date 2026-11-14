@@ -115,7 +115,7 @@ export function AlternativeSignals({
       </motion.div>
 
       <motion.div variants={fadeUp} className="mt-6 rounded-2xl border-2 border-black/10 bg-white/80 p-4 text-[12px] leading-relaxed text-black/70">
-        <span className="font-semibold text-black">Framework:</span> UdyamAI detects the MSME&rsquo;s
+        <span className="font-semibold text-black">Framework:</span> FinesseAI detects the MSME&rsquo;s
         vertical from GSTIN → NIC code, then queries the sector-specific signal providers listed
         above. The signals augment the base composite score with additional dimensions banks
         traditionally can&rsquo;t see — power consumption verifying real operations, sector

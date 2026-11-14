@@ -1,6 +1,6 @@
 > HISTORICAL DOCUMENT — superseded by docs/ARCHITECTURE_V2.md and docs/FINNESE_2_IMPLEMENTATION_PLAN.md. AgamiAI data and approval labels are synthetic; prior validation/holdout claims are withdrawn. No AA/GST/ULI/OCEN/lender integration or legal-compliance claim is substantiated by this document. Fixed credentials and public retraining were removed; PostgreSQL is now required for owner data. Do not use these historical instructions for deployment or a current demo.
 
-# UdyamAI — Production Architecture
+# FinesseAI — Production Architecture
 
 > **Status:** superseded by `ARCHITECTURE.md`, which is the canonical architecture document
 > and reflects what actually ships on Cloud Run. This file is an earlier long-term
@@ -112,7 +112,7 @@ We already have GCP muscle. Everything runs on Cloud Run except the Postgres and
 | CI/CD | **Cloud Build + GitHub Actions** | Deploy on merge to main |
 | Observability | Sentry (errors) + **Cloud Monitoring / Logging** + Datadog (APM if budget) | 30-day retention on logs, alerting on p99 latency |
 | WAF | **Cloud Armor** | Protects the public endpoints |
-| DNS | **Cloud DNS** | udyamai.credit, udyamai.in |
+| DNS | **Cloud DNS** | finesseai.credit, finesseai.in |
 
 ---
 

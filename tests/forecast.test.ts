@@ -8,3 +8,14 @@ test('walk-forward seasonal comparison excludes future input and withholds missi
  const changed=rows.map((r,i)=>i===23?{...r,amount_paise:'999999'}:r);const next=validateSeasonality(changed,'2025-01-01');assert.equal(next.folds[11].seasonalPaise,r.folds[11].seasonalPaise);assert.equal(next.folds[11].recentMeanPaise,r.folds[11].recentMeanPaise);
  assert.equal(validateSeasonality(rows.slice(1,17),'2025-01-01').status,'INSUFFICIENT_HISTORY');assert.equal(validateSeasonality(rows.filter((_,i)=>i!==7),'2025-01-01').status,'INSUFFICIENT_HISTORY');assert.equal(validateSeasonality(rows,'2024-01-01').status,'INSUFFICIENT_HISTORY');
 });
+
+test('receipt ranges use earlier errors and independently measure the last six months',()=>{
+ const history:CashRow[]=Array.from({length:30},(_,i)=>({
+  ...rows[i%12],id:String(i),occurred_on:new Date(Date.UTC(2023,i,1)).toISOString().slice(0,10),
+  amount_paise:i>=24?'999999':rows[i%12].amount_paise,
+ }));
+ assert.equal(validateSeasonality(history.slice(0,29),'2025-07-01').receiptRanges,null);
+ assert.deepEqual(validateSeasonality(history,'2025-07-01').receiptRanges?.seasonal,{
+  radiusPaise:0,calibrationMonths:12,heldOutMonths:6,withinRangeMonths:0,
+ });
+});

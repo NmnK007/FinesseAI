@@ -1,6 +1,6 @@
 {
-  "name": "UdyamAI",
-  "short_name": "UdyamAI",
+  "name": "FinesseAI",
+  "short_name": "FinesseAI",
   "description": "MSME Financial Health, in real time.",
   "start_url": "/",
   "display": "standalone",
@@ -8,7 +8,7 @@
   "theme_color": "#CCFF5E",
   "icons": [
     {
-      "src": "/udyamai.svg",
+      "src": "/finesseai.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

@@ -68,11 +68,11 @@ export function WhatsAppOtpCard({
             {/* WhatsApp header */}
             <div className="flex items-center gap-3 rounded-t-2xl bg-[#075E54] px-4 py-3">
               <div className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#075E54]">
-                <span className="font-serif text-lg font-bold">U</span>
+                <span className="font-serif text-lg font-bold">F</span>
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1 text-[13px] font-semibold text-white">
-                  UdyamAI Verification
+                  FinesseAI Verification
                   <Check className="h-3.5 w-3.5 fill-[#34B7F1] text-[#075E54]" />
                 </div>
                 <div className="text-[11px] text-white/80">online · encrypted end-to-end</div>
@@ -86,7 +86,7 @@ export function WhatsAppOtpCard({
             <div className="rounded-b-2xl bg-[#e5ddd5] p-3">
               <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-[#DCF8C6] p-3">
                 <div className="text-[13px] leading-snug text-black/90">
-                  <span className="font-bold">{otp}</span> is your UdyamAI verification code.
+                  <span className="font-bold">{otp}</span> is your FinesseAI verification code.
                   Do not share it with anyone.
                   <br />
                   <span className="text-[11px] text-black/60">Valid for 5 minutes.</span>
@@ -120,8 +120,8 @@ export function WhatsAppOtpCard({
                 <Smartphone className="h-3.5 w-3.5" /> AD-UDYMAI
               </div>
               <div className="mt-3 text-[13px] leading-snug">
-                <span className="font-bold">{otp}</span> is your UdyamAI OTP. Do not share with
-                anyone. Valid for 5 min. UdyamAI never asks for OTPs.
+                <span className="font-bold">{otp}</span> is your FinesseAI OTP. Do not share with
+                anyone. Valid for 5 min. FinesseAI never asks for OTPs.
               </div>
               <div className="mt-2 text-[10px] text-white/50">
                 Sent to {maskedPhone} · Header AD-UDYMAI · DLT template T-983ABC
@@ -142,7 +142,7 @@ export function WhatsAppOtpCard({
                 <Phone className="h-3.5 w-3.5" /> Incoming call
               </div>
               <div className="mt-3 text-[13px] text-black">
-                &ldquo;Namaste. Your UdyamAI OTP is <span className="font-bold">{otp.split("").join(" · ")}</span>.
+                &ldquo;Namaste. Your FinesseAI OTP is <span className="font-bold">{otp.split("").join(" · ")}</span>.
                 I repeat, {otp.split("").join(" ")}. Thank you.&rdquo;
               </div>
               <div className="mt-2 text-[10px] text-black/50">

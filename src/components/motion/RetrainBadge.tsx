@@ -32,7 +32,7 @@ export function RetrainBadge({ runs }: { runs: RetrainRun[] }) {
             The LR calibrator retrains on-demand against{" "}
             <span className="font-semibold text-white">AgamiAI&rsquo;s open bank-statement dataset</span>,
             bundled into the Cloud Run image. Every run is persisted to{" "}
-            <span className="font-mono text-rh-lime">/tmp/udyamai/retrain.json</span> on the serving
+            <span className="font-mono text-rh-lime">/tmp/finesseai/retrain.json</span> on the serving
             instance so you can audit drift — Cloud SQL in production.
           </p>
         </div>

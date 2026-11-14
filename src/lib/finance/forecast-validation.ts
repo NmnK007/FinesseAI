@@ -7,7 +7,22 @@ export function validateSeasonality(cash:CashRow[],asOf:string){
  const ordered=[...months].sort(([a],[b])=>a.localeCompare(b));
  const consecutive=ordered.every(([m],i)=>!i||new Date(Date.UTC(+m.slice(0,4),+m.slice(5)-2,1)).toISOString().slice(0,7)===ordered[i-1][0]);
  const caveat='Supplied months may be incomplete. This compares historical receipt baselines and does not validate future repayment capacity.';
- if(!consecutive||ordered.length<18)return {status:'INSUFFICIENT_HISTORY',reason:'Requires at least 18 consecutive observed completed months; absent months are not filled with zero.',folds:[],seasonalMaePaise:null,recentMeanMaePaise:null,caveat};
+ if(!consecutive||ordered.length<18)return {status:'INSUFFICIENT_HISTORY',reason:'Requires at least 18 consecutive observed completed months; absent months are not filled with zero.',folds:[],seasonalMaePaise:null,recentMeanMaePaise:null,receiptRanges:null,caveat};
  const folds=ordered.slice(12).map(([month,actual],j)=>{const i=j+12;return {month,actualPaise:actual,seasonalPaise:ordered[i-12][1],recentMeanPaise:Math.round(sumPaise(ordered.slice(i-3,i).map(([,n])=>n))/3)};});
- return {status:'HISTORICAL_COMPARISON',reason:'Same month last year versus prior three observed months; no test-month input used.',folds,seasonalMaePaise:Math.round(folds.reduce((n,f)=>n+Math.abs(f.actualPaise-f.seasonalPaise),0)/folds.length),recentMeanMaePaise:Math.round(folds.reduce((n,f)=>n+Math.abs(f.actualPaise-f.recentMeanPaise),0)/folds.length),caveat};
+ const receiptRanges=folds.length<18?null:{
+  seasonal:historicalErrorRange(folds,'seasonalPaise'),
+  recentMean:historicalErrorRange(folds,'recentMeanPaise')
+ };
+ return {status:'HISTORICAL_COMPARISON',reason:'Same month last year versus prior three observed months; no test-month input used.',folds,seasonalMaePaise:Math.round(folds.reduce((n,f)=>n+Math.abs(f.actualPaise-f.seasonalPaise),0)/folds.length),recentMeanMaePaise:Math.round(folds.reduce((n,f)=>n+Math.abs(f.actualPaise-f.recentMeanPaise),0)/folds.length),receiptRanges,caveat};
+}
+
+type ReceiptFold={actualPaise:number;seasonalPaise:number;recentMeanPaise:number};
+function historicalErrorRange(folds:ReceiptFold[],baseline:'seasonalPaise'|'recentMeanPaise'){
+ // Calibrate on the earlier folds and report observed coverage on later folds.
+ const calibration=folds.slice(0,-6);
+ const heldOut=folds.slice(-6);
+ const errors=calibration.map(fold=>Math.abs(fold.actualPaise-fold[baseline])).sort((a,b)=>a-b);
+ const radiusPaise=errors[Math.ceil(0.8*errors.length)-1];
+ return {radiusPaise,calibrationMonths:calibration.length,heldOutMonths:heldOut.length,
+  withinRangeMonths:heldOut.filter(fold=>Math.abs(fold.actualPaise-fold[baseline])<=radiusPaise).length};
 }

@@ -1,0 +1,37 @@
+Date,Description,Amount,Reference
+2024-05-05,Sales receipts,10400,
+2024-06-05,Sales receipts,10500,
+2024-07-05,Sales receipts,10600,
+2024-08-05,Sales receipts,10700,
+2024-09-05,Sales receipts,10800,
+2024-10-05,Sales receipts,10900,
+2024-11-05,Sales receipts,11000,
+2024-12-05,Sales receipts,11100,
+2025-01-05,Sales receipts,10000,
+2025-02-05,Sales receipts,10100,
+2025-03-05,Sales receipts,10200,
+2025-04-05,Sales receipts,10300,
+2025-05-05,Sales receipts,10400,
+2025-06-05,Sales receipts,10500,
+2025-07-05,Sales receipts,10600,
+2025-08-05,Sales receipts,10700,
+2025-09-05,Sales receipts,10800,
+2025-10-05,Sales receipts,10900,
+2025-11-05,Sales receipts,11000,
+2025-12-05,Sales receipts,11100,
+2026-01-05,Sales receipts,10000,
+2026-02-05,Sales receipts,10100,
+2026-03-05,Sales receipts,10200,
+2026-04-05,Sales receipts,10300,
+2026-05-05,Sales receipts,10400,
+2026-06-05,Sales receipts,10500,
+2026-07-05,Sales receipts,10600,
+2026-08-05,Sales receipts,10700,
+2026-08-12,Loan proceeds,10000,LOAN-ONLY
+2026-09-05,Customer payment split one,6000,MATCH-100
+2026-09-12,Customer payment split two,4000,MATCH-100
+2026-09-15,Sales receipts,800,
+2026-10-05,Invoice receipt for October,5000,INV-SHARED
+2026-10-15,Sales receipts,5900,
+2024-05-05,Sales receipts,10400,
+2026-10-32,Sales receipt with invalid date,1000,BAD-DATE

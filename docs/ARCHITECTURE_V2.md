@@ -1,6 +1,6 @@
 # Finnese 2.0 — implemented foundation
 
-The existing UdyamAI design and Next.js App Router remain. Next.js was upgraded from 14.2.16 to 15.5.29 because the dependency audit found unresolved vulnerabilities on the 14.x line. React remains 18. Fonts are bundled locally under their upstream licenses instead of fetched during builds.
+The existing FinesseAI design and Next.js App Router remain. Next.js was upgraded from 14.2.16 to 15.5.29 because the dependency audit found unresolved vulnerabilities on the 14.x line. React remains 18. Fonts are bundled locally under their upstream licenses instead of fetched during builds.
 
 ```mermaid
 flowchart LR

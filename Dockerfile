@@ -1,12 +1,12 @@
-# UdyamAI · Cloud Run image
+# FinesseAI · Cloud Run image
 #
 # Three stages so the thing that ships is only what runs: install once, build
 # once, then copy the Next.js standalone output into a clean base. Final image
 # is ~200 MB and starts in well under a second, which matters because Cloud Run
 # scales this to zero between demos.
 #
-# Build:  docker build -t udyamai .
-# Run:    docker run -p 8080:8080 -e GOOGLE_API_KEY=... udyamai
+# Build:  docker build -t finesseai .
+# Run:    docker run -p 8080:8080 -e GOOGLE_API_KEY=... finesseai
 
 # ─── deps ────────────────────────────────────────────────────────
 FROM node:22-alpine AS deps
@@ -43,7 +43,7 @@ ENV HOSTNAME=0.0.0.0
 # does not — and /app is root-owned, so the non-root user below cannot write a
 # .data directory there. Pinning it here makes the image behave identically
 # whether it runs on Cloud Run or on a laptop.
-ENV UDYAMAI_DATA_DIR=/tmp/udyamai
+ENV FINESSEAI_DATA_DIR=/tmp/finesseai
 
 RUN addgroup --system --gid 1001 nodejs \
  && adduser --system --uid 1001 nextjs

@@ -49,7 +49,7 @@ export default async function LandingPage() {
             />
           </div>
           <div className="mt-12 flex flex-col items-start justify-between gap-2 border-t border-line pt-6 text-[14px] font-medium text-white/70 sm:flex-row">
-            <span>© 2026 UdyamAI. All rights reserved.</span>
+            <span>© 2026 FinesseAI. All rights reserved.</span>
             <span>Made in India · Built for IDBI Innovate 2026</span>
           </div>
         </div>

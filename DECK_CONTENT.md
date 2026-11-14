@@ -1,6 +1,6 @@
 > HISTORICAL DOCUMENT — superseded by docs/ARCHITECTURE_V2.md and docs/FINNESE_2_IMPLEMENTATION_PLAN.md. AgamiAI data and approval labels are synthetic; prior validation/holdout claims are withdrawn. No AA/GST/ULI/OCEN/lender integration or legal-compliance claim is substantiated by this document. Fixed credentials and public retraining were removed; PostgreSQL is now required for owner data. Do not use these historical instructions for deployment or a current demo.
 
-# UdyamAI — Prototype Submission Deck (IDBI Innovate 2026)
+# FinesseAI — Prototype Submission Deck (IDBI Innovate 2026)
 
 Slide-by-slide copy for `Prototype Submission Deck _ IDBI Innovate.pptx`. Paste each block into the matching slide. All screenshots are listed at the bottom with the exact URL to open and what to capture.
 
@@ -23,13 +23,13 @@ Problem Statement: Track 3 — MSME Financial Health Card
 
 ## SLIDE 2 — Brief About the Idea
 
-**Title line:** *UdyamAI — MSME Financial Health, in real time.*
+**Title line:** *FinesseAI — MSME Financial Health, in real time.*
 
 **Body (paste as single paragraph or 4 short bullets):**
 
-> Every GST-registered business in India gets a **living Health Score** — a 0–1000 number updated the same day their bank statement or GST return changes. UdyamAI aggregates Account Aggregator + GST + UPI + EPFO data into a four-dimensional score, explains it in Hindi/Telugu/English, tells the owner exactly what to fix this month to raise it, and pre-qualifies them across 64 lenders via ULI/OCEN — **before they file a single application.**
+> Every GST-registered business in India gets a **living Health Score** — a 0–1000 number updated the same day their bank statement or GST return changes. FinesseAI aggregates Account Aggregator + GST + UPI + EPFO data into a four-dimensional score, explains it in Hindi/Telugu/English, tells the owner exactly what to fix this month to raise it, and pre-qualifies them across 64 lenders via ULI/OCEN — **before they file a single application.**
 >
-> Where every existing player scores you *once, at the moment you apply,* UdyamAI is the **first borrower-facing living Health Card** in Indian fintech.
+> Where every existing player scores you *once, at the moment you apply,* FinesseAI is the **first borrower-facing living Health Card** in Indian fintech.
 
 **Big number to drop below the paragraph** *(callout format):*
 
@@ -41,7 +41,7 @@ Problem Statement: Track 3 — MSME Financial Health Card
 
 ### How different is it from existing ideas?
 
-| | Existing lenders / scoring firms | **UdyamAI** |
+| | Existing lenders / scoring firms | **FinesseAI** |
 |---|---|---|
 | Audience | Sell scoring engines to banks | **Sell to the borrower** |
 | Score cadence | One-shot, at apply time | **Continuous — refreshed monthly** |
@@ -121,7 +121,7 @@ Problem Statement: Track 3 — MSME Financial Health Card
              └───────┴────────┼────────┴─────────┘
                               ▼
                   ┌────────────────────────┐
-                  │  UdyamAI Score Engine  │
+                  │  FinesseAI Score Engine  │
                   │   4 sub-scores → 1000  │
                   └───────────┬────────────┘
                               │
@@ -310,7 +310,7 @@ Paste six screenshots — see **Screenshot Recipe** below. Suggested slide layou
 - **Embedded in Khatabook / OkCredit** (30M+ MSME distribution)
 - **WhatsApp coaching bot** — 6-month score-improvement journeys in vernacular
 - **Sector cohort benchmarking** — "your inventory turnover is bottom quartile for textile MSMEs in Surat"
-- **UdyamAI Current Account** — primary banking relationship on top of the score
+- **FinesseAI Current Account** — primary banking relationship on top of the score
 
 ### 18–36 months
 - **RBI RegTech sandbox** partner — reference implementation for alternative-data MSME underwriting
@@ -322,9 +322,9 @@ Paste six screenshots — see **Screenshot Recipe** below. Suggested slide layou
 ## SLIDE 13 — Links
 
 ```
-GitHub Public Repository:  https://github.com/<your-handle>/udyamai
+GitHub Public Repository:  https://github.com/NmnK007/FinesseAI
 Demo Video (3 min):        https://youtu.be/<video-id>
-Final Product Link:        https://udyamai.vercel.app     (deploy first — see /README.md)
+Final Product Link:        Deployment URL pending     (deploy first — see /README.md)
 ```
 
 ---
@@ -352,4 +352,4 @@ Before shooting, put your `GOOGLE_API_KEY` in `.env.local` so Gemini explanation
 
 ## The one-liner headline the deck should keep hammering
 
-> **"Every existing player scores you at apply time. UdyamAI scores you continuously. That's Credit Karma for Indian MSMEs — and we're the first."**
+> **"Every existing player scores you at apply time. FinesseAI scores you continuously. That's Credit Karma for Indian MSMEs — and we're the first."**

@@ -18,7 +18,7 @@ export function Hero() {
           >
             <Logo size={22} variant="glyph-dark" />
             <span className="text-black">
-              Udyam<span className="font-serif italic text-black/70">AI</span>
+              Finesse<span className="font-serif italic text-black/70">AI</span>
             </span>
             <span className="text-black/60">Presents</span>
           </motion.div>

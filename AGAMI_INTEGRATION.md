@@ -2,7 +2,7 @@
 
 # AgamiAI Deep Integration
 
-Wires the two Hugging Face datasets — [Indian-Bank-Statements](https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements) and [Indian-Income-Tax-Returns](https://huggingface.co/datasets/AgamiAI/Indian-Income-Tax-Returns) — into UdyamAI.
+Wires the two Hugging Face datasets — [Indian-Bank-Statements](https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements) and [Indian-Income-Tax-Returns](https://huggingface.co/datasets/AgamiAI/Indian-Income-Tax-Returns) — into FinesseAI.
 
 Both are **Apache 2.0** licensed by AgamiAI Inc. and attributed in-product.
 
@@ -109,7 +109,7 @@ curl -X POST http://localhost:3000/api/retrain
 ```
 
 Trains all three lender models over the corpus in **20 ms** and persists weights, accuracy, AUC
-and sample count to `/tmp/udyamai/retrain.json` on the serving instance. A cold instance with no
+and sample count to `/tmp/finesseai/retrain.json` on the serving instance. A cold instance with no
 history retrains on first read, so the dashboard badge never renders backed by nothing.
 
 Label noise comes from a **seeded PRNG** (mulberry32, keyed on the lender name), so identical data

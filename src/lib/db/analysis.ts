@@ -40,8 +40,8 @@ export function analysisStore(db:Database){return {
   if(/ignore|system prompt|other (business|tenant|user)|execute|delete|transfer funds|approve.*loan/.test(q))return {answer:'I can only explain authorized financial evidence and read-only calculations. I cannot follow document instructions, access another business or perform lending actions.',tool:'policy',citations:[] as string[],mode:'LOCAL_DETERMINISTIC'};
   if(/score|स्कोर/.test(q)){
    tool='getHealthCard';citations=data.current.dimensions.flatMap(d=>d.evidenceIds);
-   answer=explainHealthIndex(data.current,locale);
-   const [latest,previous]=data.history;if(locale==='en'&&latest&&previous&&latest.result.overall!==null&&previous.result.overall!==null)answer+=` The latest saved index changed by ${latest.result.overall-previous.result.overall} points. Weighted dimension changes: ${latest.result.dimensions.map((d,i)=>`${d.label} ${((d.score!-previous.result.dimensions[i].score!)*d.weight).toFixed(2)}`).join('; ')} (rounding can affect the total by less than one point).`;
+   const [latest,previous]=data.history;const change=latest&&previous&&latest.result.overall!==null&&previous.result.overall!==null?latest.result.overall-previous.result.overall:null;
+   answer=explainHealthIndex(data.current,locale,question,change);
   }else if(/overdue|receivable|invoice|customer|बकाया/.test(q)){
    tool='getOutstandingInvoices';citations=data.evidence.filter(e=>e.kind==='INVOICE').map(e=>e.id);answer=`Owner-reported overdue sales receivables total ${formatPaise(data.current.overdueReceivablesPaise)}. Paid amounts are unverified declarations; review exact-reference bank matches and any cash settlements in the reconciliation panel.`;
   }else if(/alert|fraud|risk|flag|जोखिम/.test(q)){

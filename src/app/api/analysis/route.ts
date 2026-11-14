@@ -19,6 +19,6 @@ export const POST=endpoint(async req=>{
  if(input.action==='scenario')return NextResponse.json(await store.scenario(user,input.businessId,input.input));
  if(input.action==='review')return NextResponse.json(await store.review(user,input.businessId,input.key,input.status,input.note,today()));
  const result=await store.chat(user,input.businessId,input.question,today(),input.locale);
- const external=result.tool==='policy'?{status:'NOT_REQUESTED',highlights:[],citations:[]}:await externalHighlights(result.answer,result.citations,input.question,input.externalConsent);
+ const external=result.tool==='policy'?{status:'NOT_REQUESTED',answer:null,highlights:[],citations:[]}:await externalHighlights(result.answer,result.citations,input.question,input.externalConsent,process.env,fetch,input.locale);
  return NextResponse.json({...result,external});
 });

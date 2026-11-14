@@ -1,6 +1,6 @@
 import type { Assessment } from './assessment';
 
-export function explainHealthIndex(card:Assessment,locale:'en'|'hi'='en'){
+export function explainHealthIndex(card:Assessment,locale:'en'|'hi'='en',question='',change?:number|null){
  const scored=card.dimensions.filter((d):d is typeof d&{score:number}=>d.score!==null);
  if(card.overall===null)return locale==='hi'
   ?'सूचकांक अभी उपलब्ध नहीं है। पहले लागू रिकॉर्ड, लगातार तीन चालान महीनों और देय अनुपालन रिकॉर्ड की कमी देखें। अनुपस्थित डेटा का अनुमान नहीं लगाया जाता; यह खराब स्कोर या ऋण अस्वीकृति नहीं है।'
@@ -27,10 +27,17 @@ export function explainHealthIndex(card:Assessment,locale:'en'|'hi'='en'){
  const top=en[best.key]||'This is the strongest observed dimension in the current calculation.';
  const low=en[weak.key]||'This is the lowest observed dimension in the current calculation.';
  const overdue=card.overdueReceivablesPaise;
+ const q=question.toLowerCase();
+ const asksToImprove=/improv|improvement|raise|increase|better|fix|work on|सुधार|बेहतर|बढ़ा|ठीक/.test(q);
+ const asksChange=/why|change|changed|movement|क्यों|बदलाव|बदला/.test(q);
  if(locale==='hi'){
   const amount=new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(overdue/100);
+  if(asksToImprove)return `आपका वर्णनात्मक सूचकांक ${card.overall}/1000 है। इसे बढ़ाने का कोई प्रमाणित नुस्खा या ऋण सीमा नहीं है।\n\nपहले ${weak.label} (${weak.score}/1000) देखें। ${hi[weak.key]||'यह सबसे कम उपलब्ध आयाम है।'}\n\nकरने योग्य जाँच: ${suggestions[weak.key]?.[1]||'इस आयाम के स्रोत रिकॉर्ड और कवरेज जाँचें।'}${overdue>0?` अपलोड चालानों में ${amount} बकाया बताया गया है; यह बैंक से सत्यापित नहीं है।`:''}\n\nरिकॉर्ड सही और पूरे रखें। यह ऋण निर्णय नहीं है।`;
+  if(asksChange)return `वर्तमान वर्णनात्मक सूचकांक ${card.overall}/1000 है।${change!=null?` पिछले सहेजे आकलन से ${change} अंक का बदलाव है।`:' पिछला सहेजा आकलन उपलब्ध नहीं है, इसलिए बदलाव की तुलना नहीं कर सकते।'}\n\nसबसे अधिक अंक ${best.label} (${best.score}) और सबसे कम ${weak.label} (${weak.score}) के हैं। ${hi[weak.key]||'सबसे कम आयाम के स्रोत रिकॉर्ड जाँचें।'}\n\nयह भारित वर्णनात्मक सूचकांक है, ब्यूरो स्कोर या चूक की संभावना नहीं।`;
   return `आपका वर्णनात्मक सूचकांक ${card.overall}/1000 है। इसे अच्छा या बुरा बताने की प्रमाणित सीमा नहीं है; यह ब्यूरो स्कोर या चूक की संभावना नहीं है।\n\nसबसे मजबूत पक्ष ${best.label} (${best.score}/1000) है। ${hi[best.key]||'यह इस गणना का सबसे मजबूत उपलब्ध आयाम है।'}\n\nध्यान देने योग्य पक्ष ${weak.label} (${weak.score}/1000) है। ${hi[weak.key]||'यह इस गणना का सबसे कम उपलब्ध आयाम है।'}\n\nअगला कदम: ${suggestions[weak.key]?.[1]||'संबंधित रिकॉर्ड और कवरेज जाँचें।'}${overdue>0?`\n\nअपलोड चालानों में मालिक द्वारा बताई गई बकाया बिक्री राशि ${amount} है; यह बैंक से सत्यापित नहीं है।`:''}\n\nयह परिणाम केवल उपलब्ध, अप्रमाणित रिकॉर्ड का वर्णन करता है। रिकॉर्ड की पूर्णता जाँचें; यह ऋण निर्णय नहीं है।`;
  }
  const amount=new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(overdue/100);
+ if(asksToImprove)return `Your descriptive index is ${card.overall}/1000. There is no validated recipe or lending cutoff for raising it.\n\nStart with ${weak.label} (${weak.score}/1000). ${low}\n\nWhat to check: ${suggestions[weak.key]?.[0]||'Review the source records and coverage for this dimension.'}${overdue>0?` The uploaded invoices report ${amount} overdue; this is owner-declared and not bank-verified.`:''}\n\nKeep records accurate and complete. This is not a lending decision.`;
+ if(asksChange)return `Your current descriptive index is ${card.overall}/1000.${change!=null?` It changed by ${change} points from the previous saved assessment.`:' There is no previous saved assessment available for comparison yet.'}\n\nThe index combines the available dimensions with fixed weights. ${best.label} (${best.score}) is highest and ${weak.label} (${weak.score}) is lowest. ${low}\n\nSave a new assessment after correcting or adding records to compare. This is not a bureau score or probability of default.`;
  return `Your descriptive index is ${card.overall}/1000. There is no validated good/bad cutoff for this index; it is not a bureau score or probability of default.\n\nStrongest area: ${best.label}, ${best.score}/1000. ${top}\n\nArea to review first: ${weak.label}, ${weak.score}/1000. ${low}\n\nSuggested next step: ${suggestions[weak.key]?.[0]||'Review the source records and coverage for this dimension.'}${overdue>0?`\n\nThe uploaded invoices report ${amount} in owner-declared overdue sales receivables. These amounts are not bank-verified.`:''}\n\nThis describes the available, unverified records only. Check that the source records are complete; this is not a lending decision.`;
 }

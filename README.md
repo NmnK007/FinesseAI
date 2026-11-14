@@ -1,4 +1,4 @@
-💸#FinesseAI
+# 💸FinesseAI
 ### Financial Intelligence. Greater Clarity. Stronger MSMEs.
 
 <p align="center">

@@ -6,12 +6,35 @@ import { PGlite } from '@electric-sql/pglite';
 import type { Database,Sql } from '../src/lib/db';
 import { businessStore } from '../src/lib/db/businesses';
 import { lendingStore } from '../src/lib/db/lending';
+import { lenderFit,lenderPreferences } from '../src/lib/finance/lender-fit';
 let pg:PGlite,db:Database;
 const owner={id:randomUUID(),email:'owner@finnese.test',role:'customer' as const};
 const other={id:randomUUID(),email:'other@finnese.test',role:'customer' as const};
 const reviewer={id:randomUUID(),email:'reviewer@finnese.test',role:'lender' as const};
 before(async()=>{pg=new PGlite();for(const f of(await readdir('db/migrations')).sort())await pg.exec(await readFile(`db/migrations/${f}`,'utf8'));db={query:(s,p)=>pg.query(s,p),transaction:fn=>pg.transaction(tx=>fn(tx as Sql))};for(const u of[owner,other,reviewer])await db.query('INSERT INTO users(id,email,role) VALUES ($1,$2,$3)',[u.id,u.email,u.role]);});
 after(async()=>pg.close());
+test('lender preferences change ranking without changing the shared domain weights',()=>{
+ const keys=['revenue','compliance','counterparty','growth'];
+ const domains=(scores:number[])=>keys.map((key,index)=>({key,label:key,score:scores[index],weight:[.30,.25,.25,.20][index]}));
+ const a=domains([900,450,700,700]),b=domains([450,900,700,700]);
+ assert.ok(lenderFit(a,lenderPreferences[0]).score!>lenderFit(b,lenderPreferences[0]).score!);
+ assert.ok(lenderFit(a,lenderPreferences[1]).score!<lenderFit(b,lenderPreferences[1]).score!);
+ assert.equal(lenderFit(a.slice(0,3),lenderPreferences[0]).score,null);
+ assert.deepEqual(a.map(domain=>domain.weight),[.30,.25,.25,.20]);
+});
+test('lender interest reaches only the business owner and duplicate sends are harmless',async()=>{
+ const business=await businessStore(db).create(owner,'Interest example'),store=lendingStore(db);
+ await assert.rejects(store.expressInterest(reviewer,business.id,'working-capital'),/grant/);
+ await store.share(owner,business.id,reviewer.email);
+ assert.equal((await store.expressInterest(reviewer,business.id,'working-capital')).created,true);
+ assert.equal((await store.expressInterest(reviewer,business.id,'working-capital')).created,false);
+ assert.deepEqual((await store.interestInbox(owner,business.id)).map(({reviewer,profile_id})=>[reviewer,profile_id]),[[reviewer.email,'working-capital']]);
+ await assert.rejects(store.interestInbox(other,business.id),/access/);
+ const [grant]=(await store.owner(owner,business.id)).grants;
+ await store.revoke(owner,business.id,String(grant.id));
+ await assert.rejects(store.expressInterest(reviewer,business.id,'growth'),/grant/);
+ assert.equal((await store.interestInbox(owner,business.id)).length,1);
+});
 test('reviewer role alone grants no records; owner grant, expiry and revocation are enforced',async()=>{
  const business=await businessStore(db).create(owner,'Shared fictional business'),store=lendingStore(db);
  assert.equal((await store.pipeline(reviewer)).length,0);

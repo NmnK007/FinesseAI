@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { T } from '@/components/finance/Language';
+import { LenderFit,LenderPreferenceSelect } from '@/components/finance/LenderFit';
+import { lenderFit,lenderPreferences,type LenderPreference } from '@/lib/finance/lender-fit';
 
 export type SampleBusiness = {
  id: string;
@@ -14,13 +16,18 @@ export type SampleBusiness = {
 export function SampleLenderPanel({businesses}:{businesses:SampleBusiness[]}){
  const [selected,setSelected]=useState<string|null>(null);
  const [funded,setFunded]=useState<string[]>([]);
+ const [preference,setPreference]=useState<LenderPreference>(lenderPreferences[0]);
+ const ranked=businesses.map(business=>({business,fit:lenderFit(business.scores,preference)}))
+  .sort((a,b)=>(b.fit.score??-1)-(a.fit.score??-1)||a.business.name.localeCompare(b.business.name));
 
  return <section className="mx-auto max-w-5xl space-y-4 px-5 py-10 text-black" aria-labelledby="sample-lender">
   <p className="text-sm font-semibold"><T>Fictional lending demo</T></p>
   <h1 id="sample-lender" className="font-serif text-5xl"><T>Finesse Demo Lending Desk</T></h1>
   <p><T>Compare sample businesses and simulate a funding decision. Choices last until this page is reloaded.</T></p>
+  <LenderPreferenceSelect preference={preference} onChange={setPreference}/>
+  <p><T>Businesses are ranked by illustrative lender fit. The Financial Health Index keeps its original weights.</T></p>
   <div className="grid gap-4 md:grid-cols-2">
-   {businesses.map(business=><article key={business.id} className="space-y-3 rounded-2xl border border-black/10 bg-white p-5">
+   {ranked.map(({business,fit})=><article key={business.id} className="space-y-3 rounded-2xl border border-black/10 bg-white p-5">
     <div><h2 className="font-serif text-3xl">{business.name}</h2><p className="text-sm">{business.sector}</p></div>
     <p className="font-semibold"><T>Financial Health Index</T> {business.overall}/1000</p>
     <dl className="space-y-1 text-sm">
@@ -29,6 +36,7 @@ export function SampleLenderPanel({businesses}:{businesses:SampleBusiness[]}){
       <dd className="shrink-0">{domain.score}/1000</dd>
      </div>)}
     </dl>
+    <LenderFit fit={fit}/>
     {selected===business.id?<div className="flex flex-wrap gap-3">
      <button type="button" className="rounded-full bg-black px-4 py-2 text-sm text-white" onClick={()=>{
       setFunded(previous=>[...previous,business.id]);

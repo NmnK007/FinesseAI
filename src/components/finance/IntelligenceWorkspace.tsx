@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { TopNav } from '../TopNav';
 import { request } from './request';
 import { LendingPanel } from './LendingPanels';
+import { LenderInterestInbox } from './LenderInterestInbox';
 import { MatchingPanel } from './MatchingPanel';
 import { EvidenceControls } from './EvidenceControls';
 import { AnalysisPanels } from './AnalysisPanels';
@@ -48,6 +49,7 @@ export function IntelligenceWorkspace(){
   <MatchingPanel key={JSON.stringify([id,...data.evidence.map(e=>e.id),...data.cash.map(e=>e.id)])} businessId={id}/>
   <section><h2 className="font-serif text-3xl"><T>Electricity payments</T></h2><T>{data.current.utilities.map(u=><p className="my-3 rounded-xl bg-white p-4" key={u.id}><T>{u.period}</T><T> · </T><T>{u.status}</T><T> · paid </T><T>{formatPaise(u.paidPaise)}</T><T> / </T><T>{formatPaise(u.amountPaise)}</T></p>)}</T></section>
   <section><h2 className="font-serif text-3xl"><T>Source records and consent</T></h2><a className="my-3 block underline" href={`/api/businesses/export?businessId=${id}`}><T>Export authorized evidence, assessments and scenarios (JSON)</T></a><T>{data.batches.map((b,i)=><div key={i} className="my-3 rounded-xl bg-white p-4 text-sm"><p><T>{String(b.filename)}</T><T> · </T><T>{String(b.kind)}</T><T> · </T><T>{String(b.origin)}</T><T> · </T><T>{String(b.status)}</T></p><p><T>{b.revoked_at?'Consent revoked':`Consent expires ${new Date(String(b.expires_at)).toLocaleDateString('en-IN')}`}</T></p><T>{b.status==='PREVIEW'&&!b.revoked_at&&<button className="mr-4 underline" disabled={busy} onClick={()=>void run(async()=>{const saved=await request(`/api/intelligence/jobs?businessId=${id}&id=${b.id}`);setKind(saved.preview.kind);setPreview(saved);setMessage('Saved preview restored. Review before confirming.');})}><T>Resume preview</T></button>}</T><T>{!b.revoked_at&&<button className="underline" disabled={busy} onClick={()=>void run(async()=>{await request('/api/businesses/consent',{businessId:id,consentId:b.consent_id});await refresh();})}><T>Revoke consent</T></button>}</T></div>)}</T><T>{data.evidence.map(e=><details id={`evidence-${e.id}`} key={e.id} className="my-2 rounded-lg bg-white p-3"><summary className="break-all text-sm"><T>{e.kind}</T><T> · </T><T>{e.data.key}</T><T> · </T><T>{e.origin}</T></summary><pre className="overflow-auto text-xs"><T>{JSON.stringify(e.data,null,2)}</T></pre></details>)}</T><T>{data.cash.map(t=><details id={`evidence-${t.id}`} key={t.id} className="my-2 rounded-lg bg-white p-3"><summary className="text-sm"><T>Bank · </T><T>{t.occurred_on}</T><T> · </T><T>{formatPaise(Number(t.amount_paise))}</T></summary><p className="text-xs"><T>{t.description}</T><T> · </T><T>{t.category}</T><T> · reference </T><T>{t.reference||'missing'}</T></p></details>)}</T></section>
+  <LenderInterestInbox key={`interest-${id}`} businessId={id}/>
   <LendingPanel key={id} businessId={id}/>
   </>}</T>
  </div></main>;

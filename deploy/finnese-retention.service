@@ -1,0 +1,12 @@
+[Unit]
+Description=Finnese retention policy dry-run
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=finnese
+WorkingDirectory=/opt/finnese
+EnvironmentFile=/opt/finnese/.env
+ExecStart=/usr/bin/npm run data:retention
+NoNewPrivileges=true
+PrivateTmp=true

@@ -1,0 +1,4 @@
+import { loadEnvConfig } from '@next/env';
+import { Pool } from 'pg';
+async function main(){loadEnvConfig(process.cwd());if(process.env.NODE_ENV==='production')throw new Error('Development enrollment only.');const email=process.argv[2]?.toLowerCase();if(!email||!email.endsWith('@finnese.test'))throw new Error('Use a signed-in fictional @finnese.test account.');const pool=new Pool({connectionString:process.env.DATABASE_URL});try{const result=await pool.query("UPDATE users SET role='lender' WHERE email=$1 RETURNING id",[email]);if(!result.rows.length)throw new Error('Sign in once before enrolling this reviewer.');console.log('Development reviewer enrolled. Owner sharing grant is still required.');}finally{await pool.end();}}
+main().catch(e=>{console.error(e instanceof Error?e.message:'Enrollment failed');process.exitCode=1;});

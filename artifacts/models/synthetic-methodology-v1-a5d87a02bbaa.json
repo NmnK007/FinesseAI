@@ -1,0 +1,521 @@
+{
+  "version": "synthetic-methodology-v1",
+  "status": "DEMO_ONLY",
+  "deployment": "OFFLINE_CANDIDATE_NOT_SELECTED_FOR_APP",
+  "target": "Seeded Bernoulli outcome from author-written financial heuristics, NOT real approval/default",
+  "seed": 20261113,
+  "datasetHash": "f594a6f19395194646d17990bd74bc72c2284dabbe523ab8a5cc29eba1432a57",
+  "source": "Repository-generated fictional independent entities; no external records or observed outcomes",
+  "featureVersion": "synthetic-six-unit-v1",
+  "featureOrder": [
+    "revenue",
+    "compliance",
+    "diversification",
+    "growth",
+    "amountRatio",
+    "tenor"
+  ],
+  "preprocessing": "Fixed unit-interval generation; no fitted imputation/scaling",
+  "split": {
+    "train": 2400,
+    "validation": 800,
+    "test": 800,
+    "method": "Disjoint ordered synthetic entity ids; no historical dates exist"
+  },
+  "selection": "Minimum validation Brier across L2 penalties; fixed 0.5 threshold; test never used in selection",
+  "training": {
+    "epochs": 200,
+    "learningRate": 0.3,
+    "classWeighting": "none",
+    "lambda": 0.001
+  },
+  "weights": [
+    -0.8577356992846022,
+    1.552372954676161,
+    0.7938353478536194,
+    0.3352505868734808,
+    0.4495246891415175,
+    -1.3161689388890627,
+    -0.7858285614932421
+  ],
+  "validation": {
+    "n": 800,
+    "threshold": 0.5,
+    "prevalence": 0.41625,
+    "auroc": 0.7807421983010848,
+    "averagePrecision": 0.7234491495224554,
+    "precision": 0.7246963562753036,
+    "recall": 0.5375375375375375,
+    "falsePositiveRate": 0.145610278372591,
+    "falseNegativeRate": 0.4624624624624625,
+    "confusion": {
+      "tp": 179,
+      "fp": 68,
+      "tn": 399,
+      "fn": 154
+    },
+    "accuracy": 0.7225,
+    "brier": 0.19336496969471184,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 1,
+        "meanPrediction": 0.08729760240581738,
+        "observedRate": 0
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 66,
+        "meanPrediction": 0.1622721130124643,
+        "observedRate": 0.06060606060606061
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 133,
+        "meanPrediction": 0.2552071345108808,
+        "observedRate": 0.17293233082706766
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 185,
+        "meanPrediction": 0.3529101436740604,
+        "observedRate": 0.2918918918918919
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 168,
+        "meanPrediction": 0.44505564167138123,
+        "observedRate": 0.43452380952380953
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 138,
+        "meanPrediction": 0.5472178362720562,
+        "observedRate": 0.644927536231884
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 75,
+        "meanPrediction": 0.6394285541556541,
+        "observedRate": 0.8
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 33,
+        "meanPrediction": 0.7382219849367501,
+        "observedRate": 0.8787878787878788
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 1,
+        "meanPrediction": 0.8340018228588761,
+        "observedRate": 1
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "test": {
+    "n": 800,
+    "threshold": 0.5,
+    "prevalence": 0.3975,
+    "auroc": 0.7628395834964378,
+    "averagePrecision": 0.7050876055390893,
+    "precision": 0.7007874015748031,
+    "recall": 0.559748427672956,
+    "falsePositiveRate": 0.15767634854771784,
+    "falseNegativeRate": 0.44025157232704404,
+    "confusion": {
+      "tp": 178,
+      "fp": 76,
+      "tn": 406,
+      "fn": 140
+    },
+    "accuracy": 0.73,
+    "brier": 0.1955964301251349,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 51,
+        "meanPrediction": 0.16120467343511566,
+        "observedRate": 0.09803921568627451
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 132,
+        "meanPrediction": 0.2524643295871654,
+        "observedRate": 0.19696969696969696
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 187,
+        "meanPrediction": 0.35078094447587393,
+        "observedRate": 0.25133689839572193
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 176,
+        "meanPrediction": 0.44780986704284176,
+        "observedRate": 0.3522727272727273
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 136,
+        "meanPrediction": 0.5482608106179607,
+        "observedRate": 0.6176470588235294
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 77,
+        "meanPrediction": 0.6478789604771706,
+        "observedRate": 0.7402597402597403
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 35,
+        "meanPrediction": 0.7386448425332355,
+        "observedRate": 0.8857142857142857
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 6,
+        "meanPrediction": 0.8083512007322377,
+        "observedRate": 1
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "confidenceIntervals": {
+    "method": "Seeded 500-resample iid percentile bootstrap, approximate 95%; resampled test rows only, not target-population validation",
+    "accuracy": {
+      "lower": 0.7,
+      "upper": 0.75875
+    },
+    "brier": {
+      "lower": 0.1859769450393805,
+      "upper": 0.20509810707781465
+    }
+  },
+  "baseline": {
+    "n": 800,
+    "threshold": 0.5,
+    "prevalence": 0.3975,
+    "auroc": 0.5,
+    "averagePrecision": 0.3975,
+    "precision": null,
+    "recall": 0,
+    "falsePositiveRate": 0,
+    "falseNegativeRate": 1,
+    "confusion": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 482,
+      "fn": 318
+    },
+    "accuracy": 0.6025,
+    "brier": 0.23971874999999998,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 800,
+        "meanPrediction": 0.412500000000002,
+        "observedRate": 0.3975
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "segments": [
+    {
+      "name": "amountRatio < 0.5",
+      "metrics": {
+        "n": 404,
+        "threshold": 0.5,
+        "prevalence": 0.45792079207920794,
+        "auroc": 0.7775885474515611,
+        "averagePrecision": 0.7673137862576627,
+        "precision": 0.6968085106382979,
+        "recall": 0.7081081081081081,
+        "falsePositiveRate": 0.2602739726027397,
+        "falseNegativeRate": 0.2918918918918919,
+        "confusion": {
+          "tp": 131,
+          "fp": 57,
+          "tn": 162,
+          "fn": 54
+        },
+        "accuracy": 0.7252475247524752,
+        "brier": 0.20125501285784103,
+        "calibration": [
+          {
+            "from": 0,
+            "to": 0.1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.1,
+            "to": 0.2,
+            "n": 3,
+            "meanPrediction": 0.175382484066142,
+            "observedRate": 0
+          },
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "n": 38,
+            "meanPrediction": 0.2597484150756488,
+            "observedRate": 0.18421052631578946
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "n": 64,
+            "meanPrediction": 0.35499073408718157,
+            "observedRate": 0.203125
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "n": 111,
+            "meanPrediction": 0.44772956766770244,
+            "observedRate": 0.3063063063063063
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "n": 90,
+            "meanPrediction": 0.5494010934597061,
+            "observedRate": 0.5777777777777777
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "n": 60,
+            "meanPrediction": 0.6525493616775931,
+            "observedRate": 0.75
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "n": 32,
+            "meanPrediction": 0.7394796141136937,
+            "observedRate": 0.875
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "n": 6,
+            "meanPrediction": 0.8083512007322377,
+            "observedRate": 1
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "amountRatio >= 0.5",
+      "metrics": {
+        "n": 396,
+        "threshold": 0.5,
+        "prevalence": 0.33585858585858586,
+        "auroc": 0.7447039652362847,
+        "averagePrecision": 0.6177172514790169,
+        "precision": 0.7121212121212122,
+        "recall": 0.3533834586466165,
+        "falsePositiveRate": 0.07224334600760456,
+        "falseNegativeRate": 0.6466165413533834,
+        "confusion": {
+          "tp": 47,
+          "fp": 19,
+          "tn": 244,
+          "fn": 86
+        },
+        "accuracy": 0.7348484848484849,
+        "brier": 0.1898235325897481,
+        "calibration": [
+          {
+            "from": 0,
+            "to": 0.1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.1,
+            "to": 0.2,
+            "n": 48,
+            "meanPrediction": 0.1603185602706765,
+            "observedRate": 0.10416666666666667
+          },
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "n": 94,
+            "meanPrediction": 0.24951969928331058,
+            "observedRate": 0.20212765957446807
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "n": 123,
+            "meanPrediction": 0.34859048484072214,
+            "observedRate": 0.2764227642276423
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "n": 65,
+            "meanPrediction": 0.4479469936680791,
+            "observedRate": 0.4307692307692308
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "n": 46,
+            "meanPrediction": 0.5460298224493281,
+            "observedRate": 0.6956521739130435
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "n": 17,
+            "meanPrediction": 0.6313951915345036,
+            "observedRate": 0.7058823529411765
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "n": 3,
+            "meanPrediction": 0.7297406123416809,
+            "observedRate": 1
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic metrics describe a fabricated data generator only.",
+    "No PD, lending decision, fairness validation or representative population inference.",
+    "No real out-of-time evaluation; entity ids have no repeated histories.",
+    "Calibration bins are diagnostics, not post-hoc probability calibration."
+  ]
+}

@@ -1,0 +1,5 @@
+import { readFile,writeFile,mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { parsePractice,trainPractice } from '../src/lib/practice-model';
+async function main(){const text=await readFile('data/practice/south-german/SouthGermanCredit.asc','utf8'),hash=createHash('sha256').update(text).digest('hex');if(hash!=='5f363343f356ca38a0236baab849e472846399b2176ccc5bd686483dd8a7562f')throw new Error('Source checksum mismatch');const report={...trainPractice(parsePractice(text)),datasetSha256:hash,source:'https://archive.ics.uci.edu/dataset/522/south+german+credit',doi:'10.24432/C5X89F',license:'CC BY 4.0'};await mkdir('artifacts/practice',{recursive:true});await writeFile('artifacts/practice/south-german-v1.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({status:report.status,split:report.split,test:report.test,artifact:'artifacts/practice/south-german-v1.json'},null,2));}
+main().catch(()=>{console.error('Practice evaluation failed');process.exitCode=1;});

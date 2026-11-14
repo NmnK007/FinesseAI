@@ -1,0 +1,70 @@
+{
+  "name": "udyamai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "data:build": "node scripts/build_agami_fixtures.mjs",
+    "deck:shots": "node scripts/capture_screenshots.mjs",
+    "deck:build": "python3 scripts/build_deck.py",
+    "deck": "npm run deck:shots && npm run deck:build",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "ml:train:demo": "tsx scripts/train-demo.ts",
+    "test:db": "pglite-server --host=127.0.0.1 --port=5433 --db=.local/test-postgres",
+    "test:e2e": "node scripts/smoke-phase1.mjs",
+    "demo:enroll-reviewer": "tsx scripts/enroll-reviewer.ts",
+    "ml:evaluate": "tsx scripts/evaluate-model.ts",
+    "ml:inference:smoke": "tsx scripts/model-registry.ts smoke",
+    "data:retention": "tsx scripts/retention.ts",
+    "ml:registry": "tsx scripts/model-registry.ts",
+    "ml:evaluate:practice": "tsx scripts/evaluate-practice.ts",
+    "test:e2e:intelligence": "node scripts/smoke-intelligence.mjs",
+    "test:local-stack": "node scripts/test-local-stack.mjs"
+  },
+  "dependencies": {
+    "@fontsource/instrument-serif": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@google/generative-ai": "^0.21.0",
+    "clsx": "^2.1.1",
+    "csv-parse": "7.0.3",
+    "framer-motion": "^12.42.2",
+    "lucide-react": "^0.454.0",
+    "next": "15.5.29",
+    "nodemailer": "10.5.0",
+    "pg": "8.23.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.4",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@electric-sql/pglite": "0.5.16",
+    "@electric-sql/pglite-socket": "0.2.19",
+    "@types/node": "^22.7.5",
+    "@types/nodemailer": "8.0.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "8.57.1",
+    "eslint-config-next": "15.5.29",
+    "playwright": "^1.61.1",
+    "postcss": "8.5.32",
+    "tailwindcss": "^3.4.14",
+    "tsx": "4.23.15",
+    "typescript": "^5.6.3"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
+    }
+  }
+}

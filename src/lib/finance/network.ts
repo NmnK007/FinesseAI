@@ -1,0 +1,10 @@
+import type { CashRow } from './assessment';
+export function visibleNetwork(cash:CashRow[],asOf:string){
+ const refs=new Map<string,CashRow[]>();for(const r of cash)if(r.reference&&r.occurred_on<=asOf)refs.set(r.reference,[...(refs.get(r.reference)||[]),r]);
+ const edges:{from:string;to:string;amountPaise:number;date:string;evidenceIds:string[]}[]=[];
+ for(const rs of refs.values()){if(rs.length!==2)continue;const a=rs.find(r=>Number(r.amount_paise)<0),b=rs.find(r=>Number(r.amount_paise)>0);if(a&&b&&a.account_id!==b.account_id&&Number(a.amount_paise)+Number(b.amount_paise)===0&&Math.abs(Date.parse(a.occurred_on)-Date.parse(b.occurred_on))<=86400000)edges.push({from:a.account_id,to:b.account_id,amountPaise:-Number(a.amount_paise),date:a.occurred_on,evidenceIds:[a.id,b.id]});}
+ const adjacency=new Map<string,typeof edges>();for(const e of edges)adjacency.set(e.from,[...(adjacency.get(e.from)||[]),e]);
+ const cycles:{accounts:string[];evidenceIds:string[];amountPaise:number}[]=[],seen=new Set<string>();let traversals=0,truncated=false;
+ for(const first of edges){const walk=(path:typeof edges,visited:Set<string>)=>{if(++traversals>5000){truncated=true;return;}const last=path.at(-1)!;for(const e of adjacency.get(last.to)||[]){if(e.amountPaise!==first.amountPaise||e.date<last.date||Date.parse(e.date)-Date.parse(first.date)>3*86400000)continue;if(e.to===first.from){const ids=[...path,e].flatMap(p=>p.evidenceIds).sort();if(new Set(ids).size!==ids.length)continue;const key=ids.join(':');if(!seen.has(key)){seen.add(key);cycles.push({accounts:[first.from,...path.map(p=>p.to),e.to],evidenceIds:ids,amountPaise:first.amountPaise});}}else if(path.length<5&&!visited.has(e.to)){walk([...path,e],new Set([...visited,e.to]));}if(truncated)return;}};walk([first],new Set([first.from,first.to]));if(truncated)break;}
+ return {nodes:[...new Set(edges.flatMap(e=>[e.from,e.to]))],edges,cycles,truncated,maxAccountsPerCycle:6,caveat:'Only unique exact-reference opposite posted legs on visible accounts form edges. Equal-amount cycles over up to six accounts require review; treasury routing can be legitimate. Ambiguous or missing legs are excluded.'};
+}

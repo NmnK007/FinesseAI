@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Finnese retention policy daily
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,539 @@
+{
+  "version": "south-german-practice-v1",
+  "status": "METHODOLOGY_ONLY_NOT_MSME_VALIDATED",
+  "target": "Historical dataset bad-credit label (kredit=0); no asserted delinquency horizon or real-world PD",
+  "features": [
+    "laufzeit",
+    "hoehe",
+    "rate",
+    "wohnzeit",
+    "bishkred",
+    "pers"
+  ],
+  "preprocessing": {
+    "mean": [
+      20.7317880794702,
+      3269.8112582781455,
+      2.948675496688742,
+      2.880794701986755,
+      1.4122516556291391,
+      1.8443708609271523
+    ],
+    "std": [
+      11.979877559440904,
+      2830.5251503260347,
+      1.1138865646032146,
+      1.1049386565207635,
+      0.5873237903258216,
+      0.36250339328659087
+    ],
+    "fitOn": "train only",
+    "ordinalHandling": "Ordinal codes treated as numerical for this limited six-feature baseline; amount is transformed historical DM, not INR"
+  },
+  "split": {
+    "train": 604,
+    "validation": 209,
+    "test": 187,
+    "method": "SHA256 of all 20 observed predictor values modulo 100; identical vectors stay together. Borrower IDs and per-record dates unavailable."
+  },
+  "training": {
+    "epochs": 200,
+    "learningRate": 0.3,
+    "l2": 0.01,
+    "threshold": 0.5,
+    "classWeighting": "none"
+  },
+  "weights": [
+    -0.9361364765493979,
+    0.2926030459179755,
+    0.1514882032254142,
+    0.17989510299181888,
+    -0.02233703482338009,
+    -0.1824038892512998,
+    -0.041085039586688604
+  ],
+  "validation": {
+    "n": 209,
+    "threshold": 0.5,
+    "prevalence": 0.3157894736842105,
+    "auroc": 0.64907819453274,
+    "averagePrecision": 0.43638082471808765,
+    "precision": 0.4666666666666667,
+    "recall": 0.10606060606060606,
+    "falsePositiveRate": 0.055944055944055944,
+    "falseNegativeRate": 0.8939393939393939,
+    "confusion": {
+      "tp": 7,
+      "fp": 8,
+      "tn": 135,
+      "fn": 59
+    },
+    "accuracy": 0.6794258373205742,
+    "brier": 0.20512178791778107,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 33,
+        "meanPrediction": 0.16547059407832362,
+        "observedRate": 0.18181818181818182
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 89,
+        "meanPrediction": 0.2525968015612491,
+        "observedRate": 0.25842696629213485
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 55,
+        "meanPrediction": 0.3367328948544702,
+        "observedRate": 0.34545454545454546
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 17,
+        "meanPrediction": 0.4319670323905691,
+        "observedRate": 0.6470588235294118
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 14,
+        "meanPrediction": 0.550946255059462,
+        "observedRate": 0.5
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 1,
+        "meanPrediction": 0.6268535382279586,
+        "observedRate": 0
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "test": {
+    "n": 187,
+    "threshold": 0.5,
+    "prevalence": 0.3155080213903743,
+    "auroc": 0.6414194915254238,
+    "averagePrecision": 0.489177034621286,
+    "precision": 0.8333333333333334,
+    "recall": 0.0847457627118644,
+    "falsePositiveRate": 0.0078125,
+    "falseNegativeRate": 0.9152542372881356,
+    "confusion": {
+      "tp": 5,
+      "fp": 1,
+      "tn": 127,
+      "fn": 54
+    },
+    "accuracy": 0.7058823529411765,
+    "brier": 0.20307664364145905,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 25,
+        "meanPrediction": 0.17272840076706175,
+        "observedRate": 0.2
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 86,
+        "meanPrediction": 0.24927331522727386,
+        "observedRate": 0.22093023255813954
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 51,
+        "meanPrediction": 0.34354835630472197,
+        "observedRate": 0.43137254901960786
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 19,
+        "meanPrediction": 0.44751029429447964,
+        "observedRate": 0.42105263157894735
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 6,
+        "meanPrediction": 0.5410754870202895,
+        "observedRate": 0.8333333333333334
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "confidenceIntervals": {
+    "method": "Seeded 500-resample iid percentile bootstrap, approximate 95%; resampled test rows only, not target-population validation",
+    "accuracy": {
+      "lower": 0.6417112299465241,
+      "upper": 0.7754010695187166
+    },
+    "brier": {
+      "lower": 0.17355489593662743,
+      "upper": 0.23119564333052542
+    }
+  },
+  "baseline": {
+    "n": 187,
+    "threshold": 0.5,
+    "prevalence": 0.3155080213903743,
+    "auroc": 0.5,
+    "averagePrecision": 0.3155080213903743,
+    "precision": null,
+    "recall": 0,
+    "falsePositiveRate": 0,
+    "falseNegativeRate": 1,
+    "confusion": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 128,
+      "fn": 59
+    },
+    "accuracy": 0.6844919786096256,
+    "brier": 0.2166269533398364,
+    "calibration": [
+      {
+        "from": 0,
+        "to": 0.1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.1,
+        "to": 0.2,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "n": 187,
+        "meanPrediction": 0.28973509933774766,
+        "observedRate": 0.3155080213903743
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "n": 0,
+        "meanPrediction": null,
+        "observedRate": null
+      }
+    ]
+  },
+  "segments": [
+    {
+      "name": "age < 30",
+      "metrics": {
+        "n": 77,
+        "threshold": 0.5,
+        "prevalence": 0.36363636363636365,
+        "auroc": 0.6311953352769679,
+        "averagePrecision": 0.5299300563277737,
+        "precision": 1,
+        "recall": 0.03571428571428571,
+        "falsePositiveRate": 0,
+        "falseNegativeRate": 0.9642857142857143,
+        "confusion": {
+          "tp": 1,
+          "fp": 0,
+          "tn": 49,
+          "fn": 27
+        },
+        "accuracy": 0.6493506493506493,
+        "brier": 0.22370464369351997,
+        "calibration": [
+          {
+            "from": 0,
+            "to": 0.1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.1,
+            "to": 0.2,
+            "n": 8,
+            "meanPrediction": 0.1760334805530869,
+            "observedRate": 0.25
+          },
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "n": 38,
+            "meanPrediction": 0.24963735150379068,
+            "observedRate": 0.23684210526315788
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "n": 22,
+            "meanPrediction": 0.3378074121682806,
+            "observedRate": 0.5454545454545454
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "n": 8,
+            "meanPrediction": 0.4513901318433194,
+            "observedRate": 0.5
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "n": 1,
+            "meanPrediction": 0.5748504930859939,
+            "observedRate": 1
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "age >= 30",
+      "metrics": {
+        "n": 110,
+        "threshold": 0.5,
+        "prevalence": 0.2818181818181818,
+        "auroc": 0.6521028991425072,
+        "averagePrecision": 0.48310134013581413,
+        "precision": 0.8,
+        "recall": 0.12903225806451613,
+        "falsePositiveRate": 0.012658227848101266,
+        "falseNegativeRate": 0.8709677419354839,
+        "confusion": {
+          "tp": 4,
+          "fp": 1,
+          "tn": 78,
+          "fn": 27
+        },
+        "accuracy": 0.7454545454545455,
+        "brier": 0.1886370436050164,
+        "calibration": [
+          {
+            "from": 0,
+            "to": 0.1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.1,
+            "to": 0.2,
+            "n": 17,
+            "meanPrediction": 0.17117306910304989,
+            "observedRate": 0.17647058823529413
+          },
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "n": 48,
+            "meanPrediction": 0.2489851198416978,
+            "observedRate": 0.20833333333333334
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "n": 29,
+            "meanPrediction": 0.34790355530478095,
+            "observedRate": 0.3448275862068966
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "n": 11,
+            "meanPrediction": 0.4446885942589598,
+            "observedRate": 0.36363636363636365
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "n": 5,
+            "meanPrediction": 0.5343204858071486,
+            "observedRate": 0.8
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "n": 0,
+            "meanPrediction": null,
+            "observedRate": null
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Foreign historical consumer population, oversampled bad outcomes and unknown sampling weights; probabilities are not population PD.",
+    "No actual borrower identifiers or record timestamps; cannot prove borrower independence or out-of-time validation.",
+    "Age excluded from fitting; age segment diagnostics do not establish fairness.",
+    "No app inference, Health Card integration, model publication or lending use."
+  ],
+  "datasetSha256": "5f363343f356ca38a0236baab849e472846399b2176ccc5bd686483dd8a7562f",
+  "source": "https://archive.ics.uci.edu/dataset/522/south+german+credit",
+  "doi": "10.24432/C5X89F",
+  "license": "CC BY 4.0"
+}

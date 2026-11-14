@@ -1,0 +1,13 @@
+Date,Narration,Debit,Credit,Balance,Reference,Currency
+01/08/2026,Owner capital injection,,100000.00,100000.00,DEMO-001,INR
+02/08/2026,Customer payment fictional shop,,25000.50,125000.50,DEMO-002,INR
+03/08/2026,Supplier fictional stock,18000.25,,107000.25,DEMO-003,INR
+04/08/2026,Electricity bill,2500.00,,104500.25,DEMO-004,INR
+05/08/2026,Loan disbursement demonstration,,50000.00,154500.25,DEMO-005,INR
+06/08/2026,Internal transfer own account,10000.00,,144500.25,DEMO-006,INR
+01/09/2026,Customer payment fictional shop,,30000.00,174500.25,DEMO-007,INR
+02/09/2026,Customer refund,1000.00,,173500.25,DEMO-008,INR
+03/09/2026,Loan EMI,5000.00,,168500.25,DEMO-009,INR
+04/09/2026,UPI unknown receipt,,750.00,169250.25,DEMO-010,INR
+04/09/2026,UPI unknown receipt,,750.00,169250.25,DEMO-010,INR
+31/02/2026,Invalid date example,,100.00,,DEMO-BAD,INR

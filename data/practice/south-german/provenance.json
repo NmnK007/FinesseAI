@@ -1,0 +1,9 @@
+{
+  "source": "https://archive.ics.uci.edu/static/public/522/south%2Bgerman%2Bcredit.zip",
+  "page": "https://archive.ics.uci.edu/dataset/522/south+german+credit",
+  "doi": "10.24432/C5X89F",
+  "license": "CC BY 4.0",
+  "archiveSha256": "0b40d40eb7321693d559e247a556f88a6cc8df8489c3cb2ae084db7592584551",
+  "retrieved": "2026-11-13",
+  "use": "Foreign historical consumer-credit methodology only; not Indian MSME validation"
+}

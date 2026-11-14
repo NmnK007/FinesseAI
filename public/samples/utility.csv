@@ -1,0 +1,4 @@
+bill_id,period,due_on,amount,paid_amount,paid_on,disputed,currency
+ELEC-AUG,2026-08,2026-09-10,2500,2500,2026-09-09,false,INR
+ELEC-SEP,2026-09,2026-10-10,2600,2600,2026-10-12,false,INR
+ELEC-OCT,2026-10,2026-11-10,2700,0,,false,INR

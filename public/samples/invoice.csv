@@ -1,0 +1,4 @@
+invoice_id,issued_on,due_on,counterparty,amount,paid_amount,direction,currency
+DEMO-002,2026-08-01,2026-08-20,Fictional Shop A,25000.50,25000.50,SALE,INR
+DEMO-007,2026-09-01,2026-09-20,Fictional Shop B,30000,30000,SALE,INR
+DEMO-OCT,2026-10-01,2026-10-20,Fictional Shop C,32000,0,SALE,INR

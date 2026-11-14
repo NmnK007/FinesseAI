@@ -1,6 +1,6 @@
-# Finnese 2.0 / UdyamAI
+#  FinesseAI
 
-MSME financial evidence prototype, extending the original UdyamAI project for IDBI Innovate 2026. Original repository and history: [NmnK007/Finnese](https://github.com/NmnK007/Finnese). Existing visual design, score simulator, language demos and original authorship are preserved.
+MSME financial evidence prototype, extending the original UdyamAI project for IDBI Innovate 2026. O. Existing visual design, score simulator, language demos and original authorship are preserved.
 
 **Secure foundation:** local Mailpit OTP, opaque secure sessions, PostgreSQL migrations and owner isolation, bank CSV mapping/preview, row validation, reviewed categories, deduplication, source provenance, consent revocation, stored cash metrics, export and deletion.
 
@@ -26,7 +26,7 @@ npm.cmd run db:migrate
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
-Open [Finnese](http://localhost:3000/login/customer) and the [local OTP inbox](http://127.0.0.1:8025). Use a fictional address such as `owner@finnese.test`. Mailpit captures the code locally; no real email/SMS/WhatsApp is sent. Create a business, upload `public/samples/fictional-bank.csv`, review and confirm. Re-upload under the same account alias to verify deduplication.
+Open [Finesse](http://localhost:3000/login/customer) and the [local OTP inbox](http://127.0.0.1:8025). Use a fictional address such as `owner@finnese.test`. Mailpit captures the code locally; no real email/SMS/WhatsApp is sent. Create a business, upload `public/samples/fictional-bank.csv`, review and confirm. Re-upload under the same account alias to verify deduplication.
 
 `AUTH_DELIVERY=mailpit` and `ENABLE_DEMO=true` work only under `npm.cmd run dev`; production refuses both. `APP_ORIGIN` must exactly match the browser origin. PostgreSQL data persists in the Compose named volume. `docker compose down` stops services without deleting that volume.
 

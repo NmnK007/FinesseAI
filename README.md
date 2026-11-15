@@ -23,7 +23,7 @@
 </p>
 
 ---
-
+<a name="overview"></a>
 ## ✨ Overview
 
 **Financial information shouldn't be complicated. Understanding it shouldn't be a privilege.**
@@ -59,6 +59,7 @@ This creates three major challenges:
 
 The objective is not simply to generate another financial score. It is to make the underlying financial evidence understandable and useful.
 
+<a name="architecture"></a>
 ## 🏗️ System Architecture
 
 FinesseAI follows a modular Next.js architecture with a PostgreSQL-backed data layer. Its implementation emphasizes explicit authorization, validated financial imports, data provenance, and controlled access to business records.
@@ -157,6 +158,7 @@ flowchart LR
 6. **Analysis:** Stored evidence is used to generate financial metrics, descriptive Health Cards, alerts, and scenarios.
 7. **Presentation:** Business owners receive an organized financial intelligence workspace.
 
+<a name="features"></a>
 ## 🚀 Features
 
 ### Financial Data Management
@@ -211,6 +213,7 @@ The copilot uses predefined financial functions and PostgreSQL full-text retriev
 
 The lending workspace is a development sandbox. It does not submit applications to actual lenders.
 
+<a name="technology-stack"></a>
 ## 🛠️ Technology Stack
 
 | Layer | Technologies |
@@ -308,6 +311,7 @@ FinesseAI/
 
 *Note: This is a high-level responsibility map, not an exhaustive file-by-file directory listing.*
 
+<a name="getting-started"></a>
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -460,6 +464,7 @@ FinesseAI is under active development. Its current implementation provides sever
 
 Our focus is to build a trustworthy financial intelligence platform without confusing simulated capabilities with real-world integrations.
 
+<a name="documentation"></a>
 ## 📚 Documentation
 
 For a deeper understanding of the implementation, refer to the following documents:

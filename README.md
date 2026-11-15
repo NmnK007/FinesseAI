@@ -48,7 +48,7 @@ FinesseAI aims to bridge the gap between raw financial data and actionable finan
 
 Traditional financial assessment often depends on fragmented information, manually maintained records, and financial indicators that are difficult for small business owners to interpret.
 
-This creates three major challenges:
+This creates four major challenges:
 
 | Challenge | FinesseAI's Approach |
 |---|---|

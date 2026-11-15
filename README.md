@@ -483,13 +483,7 @@ For a deeper understanding of the implementation, refer to the following documen
 
 ## 🙌 Attribution
 
-FinesseAI builds upon the original Finesse project.
-
-Original repository and development history:
-
-[github.com/NmnK007/Finesse](https://github.com/NmnK007/Finesse)
-
-The project also uses attributed synthetic datasets from AgamiAI for development and illustrative financial workflows.
+The project uses attributed synthetic datasets from AgamiAI for development and illustrative financial workflows.
 
 - [Indian-Bank-Statements](https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements)
 - [Indian-Income-Tax-Returns](https://huggingface.co/datasets/AgamiAI/Indian-Income-Tax-Returns)
